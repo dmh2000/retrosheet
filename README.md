@@ -1,1 +1,3 @@
-readme tbd
+- csv-transform : using json csv-parse to read original retrosheet csv files and transform to JSON
+- json-interface : convert the csv data spec to a golang interface for use by rtfs
+- rtfs : read retrosheet game data json file and upload to firestore
