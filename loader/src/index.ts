@@ -1,7 +1,10 @@
-const MongoClient = require("mongodb").MongoClient;
-const fs = require("fs");
-const path = require("path");
+// const MongoClient = require("mongodb").MongoClient;
+// const fs = require("fs");
+// const path = require("path");
 
+import { MongoClient } from "mongodb";
+import * as path from "path";
+import * as fs from "fs";
 /**
  *
  * @param {*} url
@@ -10,7 +13,7 @@ const path = require("path");
  * @param {*} fields
  * @return Promise
  */
-function load(url, dbname, collectionName, documents) {
+function load(url: string, dbname: string, collectionName: string, documents: any) {
   const client = new MongoClient(url, { useUnifiedTopology: true });
   let db;
 
@@ -50,7 +53,7 @@ const fname = "gl2010.json";
 const datapath = path.join(data, fname);
 console.log(datapath);
 
-const gameJson = fs.readFileSync(path.join(data, "gl2010.json"), { encoding: "UTF-8" });
+const gameJson = fs.readFileSync(path.join(data, "gl2010.json"), { encoding: "utf8" });
 const games = JSON.parse(gameJson);
 console.log(games.length);
 
