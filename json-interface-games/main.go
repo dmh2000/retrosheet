@@ -1,11 +1,11 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	// makeGameStruct()
+	// only used to generate the json to go struct name mapping
+	// uncomment to use
+//	makeGameStruct()
 
 	var fname = "/home/dmh2000/projects/baseball/data/games/json/1871_2020/gl2013.json"
     var games []game
