@@ -256,15 +256,43 @@ const glfields = [
 ]
 
 // matching types for each of those fields
+// prettier-ignore
 const gltypes = [
-  "string","string","string","string","string","number","string","string","number","number","number","number","string","string","string","string","string",
-  "number","number","string","string","number","number","number","number","number","number","number","number","number","number","number","number","number",
-  "number","number","number","number","number","number","number","number","number","number","number","number","number","number","number","number","number",
-  "number","number","number","number","number","number","number","number","number","number","number","number","number","number","number","number","number",
-  "number","number","number","number","number","number","number","number","number","string","string","string","string","string","string","string","string",
-  "string","string","string","string","string","string","string","string","string","string","string","string","string","string","string","string","string",
-  "string","string","string","string","string","number","string","string","number","string","string","number","string","string","number","string","string",
-  "number","string","string","number","string","string","number","string","string","number","string","string","number","string","string","number","string",
-  "string","number","string","string","number","string","string","number","string","string","number","string","string","number","string","string","number",
+"string", "string", "string", "string", "string", "number", "string", "string", "number", "number", "number", "number", "string", "string", "string", "string", "string",
+"number", "number", "string", "string", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number",
+"number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number",
+"number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number",
+"number", "number", "number", "number", "number", "number", "number", "number", "number", "string", "string", "string", "string", "string", "string", "string", "string",
+"string", "string", "string", "string", "string", "string", "string", "string", "string", "string", "string", "string", "string", "string", "string", "string", "string",
+"string", "string", "string", "string", "string", "number", "string", "string", "number", "string", "string", "number", "string", "string", "number", "string", "string",
+"number", "string", "string", "number", "string", "string", "number", "string", "string", "number", "string", "string", "number", "string", "string", "number", "string",
+"string", "number", "string", "string", "number", "string", "string", "number", "string", "string", "number", "string", "string", "number", "string", "string", "number",
+"string", "string", "string", "string", "string", "string", "string", "string",
 ];
-module.exports = {glfields,gltypes}
+
+// prettier-ignore
+// const gltypes2 = [
+//   "string",  "string",  "string",  "string",  "string",  "number",  "string",  "string",
+//   "number",  "number",  "number",  "number",  "string",  "string",  "string",  "string",
+//   "string",  "number",  "number",  "string",  "string",  "number",  "number",  "number",
+//   "number",  "number",  "number",  "number",  "number",  "number",  "number",  "number",
+//   "number",  "number",  "number",  "number",  "number",  "number",  "number",  "number",
+//   "number",  "number",  "number",  "number",  "number",  "number",  "number",  "number",
+//   "number",  "number",  "number",  "number",  "number",  "number",  "number",  "number",
+//   "number",  "number",  "number",  "number",  "number",  "number",  "number",  "number",
+//   "number",  "number",  "number",  "number",  "number",  "number",  "number",  "number",
+//   "number",  "number",  "number",  "number",  "number",  "string",  "string",  "string",
+//   "string",  "string",  "string",  "string",  "string",  "string",  "string",  "string",
+//   "string",  "string",  "string",  "string",  "string",  "string",  "string",  "string",
+//   "string",  "string",  "string",  "string",  "string",  "string",  "string",  "string",
+//   "string",  "string",  "string",  "number",  "string",  "string",  "number",  "string",
+//   "string",  "number",  "string",  "string",  "number",  "string",  "string",  "number",
+//   "string",  "string",  "number",  "string",  "string",  "number",  "string",  "string",
+//   "number",  "string",  "string",  "number",  "string",  "string",  "number",  "string",
+//   "string",  "number",  "string",  "string",  "number",  "string",  "string",  "number",
+//   "string",  "string",  "number",  "string",  "string",  "number",  "string",  "string",
+//   "number",  "string",  "string",  "string",  "string",  "string",  "string",  "string",
+//   "string",
+// ];
+
+module.exports = { glfields, gltypes };

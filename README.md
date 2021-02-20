@@ -2,7 +2,13 @@
 - json-interface : convert the csv data spec to a golang interface for use by rtfs
 - rtfs : read retrosheet game data json file and upload to firestore
 
-RETROSHEET LICENSE
+# RETROSHEET DATA
+
+ The information used here was obtained free of
+ charge from and is copyrighted by Retrosheet.  Interested
+ parties may contact Retrosheet at "www.retrosheet.org".
+
+# RETROSHEET LICENSE
 
 Recipients of Retrosheet data are free to make any desired use of
 the information, including (but not limited to) selling it,
@@ -22,3 +28,4 @@ responsible for any consequences arising from the use the
 material presented here. All information is subject to corrections
 as additional data are received. We are grateful to anyone who
 discovers discrepancies and we appreciate learning of the details.
+

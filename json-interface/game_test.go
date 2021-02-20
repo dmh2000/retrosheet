@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
+	"testing"
 )
 
-func main() {
-	// makeGameStruct()
-
-	var fname = "/home/dmh2000/projects/baseball/data/games/json/1871_2020/gl2013.json"
+// TestGameFile ...
+func TestGameFile(t *testing.T) {
+	var fname = "gl2020.json"
     var games []game
 
 	games = make([]game,0)
