@@ -13,7 +13,12 @@ import * as fs from "fs";
  * @param {*} fields
  * @return Promise
  */
-function load(url: string, dbname: string, collectionName: string, documents: any) {
+function load(
+  url: string,
+  dbname: string,
+  collectionName: string,
+  documents: any
+) {
   const client = new MongoClient(url, { useUnifiedTopology: true });
   let db;
 
@@ -47,13 +52,15 @@ function load(url: string, dbname: string, collectionName: string, documents: an
 const url = "mongodb://192.168.5.3:27017";
 // const url = "mongodb://localhost:27017";
 const dbname = "baseball";
-const data = "/home/dmh2000/projects/baseball/data/games/json";
+const data = "../../data/games/json";
 const fname = "gl2010.json";
 
 const datapath = path.join(data, fname);
 console.log(datapath);
 
-const gameJson = fs.readFileSync(path.join(data, "gl2010.json"), { encoding: "utf8" });
+const gameJson = fs.readFileSync(path.join(data, "gl2010.json"), {
+  encoding: "utf8",
+});
 const games = JSON.parse(gameJson);
 console.log(games.length);
 
