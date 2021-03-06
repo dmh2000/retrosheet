@@ -1,7 +1,7 @@
-const gameLogToJson = require('./src/gameLog');
+const gameLogToJson = require("./gameLog");
 
 if (process.argv.length < 4) {
-  console.log('gameToJson <.../GLyyyy.TXT> <.../glyyyy.json>');
+  console.log("gameToJson <.../GLyyyy.TXT> <.../glyyyy.json>");
   process.exit(1);
 }
 

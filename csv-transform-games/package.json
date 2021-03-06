@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js  ../../data/games/csv/1871_2020 ../../data/games/json"
   },
   "author": "david howard",
   "license": "ISC",

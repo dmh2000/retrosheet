@@ -1,35 +1,24 @@
+#!/usr/bin/env node
 const fs = require("fs");
+const gameLogToJson = require("./gameLog");
 
-const MongoClient = require("mongodb").MongoClient;
+if (process.argv.length < 4) {
+  console.log(
+    "gamesToJson <directory with retrosheet gamelog .TXT files> <output directory>"
+  );
+  process.exit(1);
+}
 
-const glfields = require("./src/glfields");
-const collections = require("./src/collections");
-const query = require("./src/query");
-const loader = require("./src/loader");
-
-const url = "mongodb://192.168.5.3:27017";
-const dbname = "baseball";
-const fname = __dirname + "/data/GL2010.TXT";
-// glfields.readFile(__dirname + "/data/GL2010.TXT");
-
-// read the record and get JSON back (synchronous)
-const game = glfields.readGameRecord(fname);
-
-// save it as a json file (synchronous)
-fs.writeFileSync(__dirname + "/gl2010x.json", JSON.stringify(game, null, 2));
-/*
-collections
-  .listCollections(url, dbname)
-  .then((a) => {
-    console.log(a);
-  })
-  .then(() => {
-    return query.find(url, dbname, "xyz", {}, {});
-  })
-  .then((q) => {
-    console.log(q);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-*/
+const indir = fs.opendirSync(process.argv[2]);
+const outdir = fs.opendirSync(process.argv[3]);
+for (;;) {
+  const d = indir.readSync();
+  if (d == null) {
+    break;
+  }
+  const m = d.name.match(/GL(\d\d\d\d)\.TXT/);
+  if (m != null) {
+    console.log(`${indir.path}/${d.name}`);
+    gameLogToJson(`${indir.path}/${d.name}`, `${outdir.path}/gl${m[1]}.json`);
+  }
+}
