@@ -6,40 +6,49 @@
 
 ## ./doc
 
-## ./csv-transform-games
+## csv-transform
+
+The following code uses node.js
+
+1. csv-transform-games
 
 Code that transforms the gamelog csv files from retrosheet.org into json files
 These files contain detailed information about specific games by season and year.
 (Game Logs)[https://www.retrosheet.org/gamelogs]
 
-## ./csv-transform-teams
+2. csv-transform-teams
 
 Code that transforms the teams csv file from retrosheet.org into json files
 This file contains information about the teams that appear in the gamelogs.
 (Teams)[https://www.retrosheet.org/TeamIDs.htm]
 
-## ./csv-transform-ids
+3. csv-transform-ids
 
 Code that transforms the csv file with data about personnel into json files.
 (Personnel)[https://www.retrosheet.org/retroID.htm]
 
-## ./json-interface
+## json-interface
 
-A package that has functions to unmarshall the json files for teams, personnel and game logs. Also includes test code for each type of data.
+A Go package that has functions to unmarshall the json files for teams, personnel and game logs. Also includes test code for each type of data.
 
-- game.go :
-  - func loadGames(fname string) ([]game, error)
-  - returns a slice of game logs or an error
-- personnel.go :
-  - func loadIDs(fname string) ([]id, error)
-  - returns a slice of personnel data or an error
-- team.go :
-  - func loadTeams(fname string) ([]team, error)
-  - returns a slice of team data or an error
+1. game.go :
+
+- func loadGames(fname string) ([]game, error)
+- returns a slice of game logs or an error
+
+2. personnel.go :
+
+- func loadIDs(fname string) ([]id, error)
+- returns a slice of personnel data or an error
+
+3. team.go :
+
+- func loadTeams(fname string) ([]team, error)
+- returns a slice of team data or an error
 
 ## loader-go
 
-A program that takes the gamelog json files and loads them into a local mongodb database.
+A Go program that takes the gamelog json files and loads them into a local mongodb database.
 
 ## temporary
 
