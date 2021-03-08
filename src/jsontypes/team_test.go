@@ -2,13 +2,14 @@ package jsontypes
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"testing"
 )
 
 // TestTeamFile ...
 func TestTeamFile(t *testing.T) {
-	var fname = "../../data/teams.json"
+	var fname = os.Getenv("RETROSHEET") + "/teams.json"
     var teams []Team
 
 	teams = make([]Team,0)
@@ -24,7 +25,7 @@ func TestTeamFile(t *testing.T) {
 }
 
 func TestTeamStruct(t *testing.T) {
-	var fname = "../../data/teams.json"
+	var fname = os.Getenv("RETROSHEET") + "/teams.json"
     var teams []Team
 
 	teams = make([]Team,0)

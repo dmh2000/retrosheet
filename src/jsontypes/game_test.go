@@ -2,18 +2,19 @@ package jsontypes
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"testing"
 )
 
 // TestGameFile ...
 func TestGameFile(t *testing.T) {
-	var fname = "../../data/games/json/gl2013.json"
+	var fname = os.Getenv("RETROSHEET") + "/games/json/gl2013.json"
     var games []Game
 
 	games = make([]Game,0)
 
-	games,err := LoadGames(fname)
+	games,err := LoadGamelog(fname)
 	if err != nil {
 		t.Error("load failed",err)
 	}
@@ -23,13 +24,29 @@ func TestGameFile(t *testing.T) {
 
 }
 
+func TestGameDir(t *testing.T) {
+	var dirname = os.Getenv("RETROSHEET") + "/games/json/"
+    var games []Game
+
+	games,err := LoadGames(dirname)
+	if err != nil {
+		t.Error("load failed",err)
+	}
+	if games == nil {
+		t.Error("load failed (2)")
+	}
+	if len(games) == 0 {
+		t.Error("no games found")
+	}
+}
+
 func TestGameStruct(t *testing.T) {
-	var fname = "../../data/games/json/gl2013.json"
+	var fname = os.Getenv("RETROSHEET") + "/games/json/gl2013.json"
     var games []Game
 
 	games = make([]Game,0)
 
-	games,err := LoadGames(fname)
+	games,err := LoadGamelog(fname)
 
 	if err != nil {
 		t.Error("load failed",err)

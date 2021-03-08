@@ -2,12 +2,13 @@ package jsontypes
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"testing"
 )
 
 func TestPersonnel(t *testing.T) {
-	var fname = "../../data/ids.json"
+	var fname = os.Getenv("RETROSHEET") + "/personnel.json"
     var ids []Person
 
 	ids = make([]Person,0)

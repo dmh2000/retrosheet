@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
+	"path"
 )
 
 // Game - The contents of one game from a gamelog
@@ -180,9 +182,9 @@ func unmarshalGame(line []byte) (Game, error) {
 
 }
 
-// LoadGames - loads the games from a single gamelog file
+// LoadGamelog - loads the games from a single gamelog file
 // It returns a slice containing the game data from the specified file (fname)
-func LoadGames(fname string) ([]Game, error) {
+func LoadGamelog(fname string) ([]Game, error) {
 	jsonBlob, err := ioutil.ReadFile(fname)
 	if err != nil {
 		return nil, err
@@ -198,3 +200,35 @@ func LoadGames(fname string) ([]Game, error) {
 	return games, nil
 }
 
+// LoadGames loads all gamelogs in a single directory
+// files must have extent '.json'
+// other files are skipped
+func LoadGames(dirname string) ([]Game, error) {
+	var games []Game
+	var gamelog []Game
+
+	// iterate over the directory containing the game files
+	games = make([]Game,0)
+	dirs, err := os.ReadDir(dirname)
+	for _,dir := range dirs {
+
+		// ignore non-json files
+		if path.Ext(dir.Name()) != "json" {
+			continue
+		}
+		
+		// fs.Direntry Name returns only final element of path
+		fname := dirname + "/" + dir.Name()
+
+		// get the game data from the json file
+		gamelog, err = LoadGamelog(fname)
+		if err != nil {
+			return nil, err
+		}
+
+		// merge it to the total games
+		games = append(games,gamelog...)
+	}
+
+	return games,nil
+}

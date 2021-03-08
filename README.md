@@ -62,7 +62,7 @@ A Go program that takes the gamelog json files and loads them into a local mongo
 
 # RETROSHEET
 
-The code in this repo my own creation and is not supported or endorsed by
+The code in this repo my own creation and is not part of, supported by or endorsed by
 retrosheet.org. The following are the license terms for use of the
 retrosheet data.
 
