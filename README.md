@@ -1,12 +1,12 @@
-- csv-transform : using json csv-parse to read original retrosheet csv files and transform to JSON
-- json-interface : convert the csv data spec to a golang interface for use by rtfs
-- loader-go : golang code to read the json files
+# DMH2000's Retrosheet Baseball Data Utilities
 
-# Contents
+## Contents
 
-## ./doc
+### doc
 
-## csv-transform
+Additional documentation.
+
+### csv-transform
 
 The following code uses node.js
 
@@ -27,30 +27,33 @@ This file contains information about the teams that appear in the gamelogs.
 Code that transforms the csv file with data about personnel into json files.
 (Personnel)[https://www.retrosheet.org/retroID.htm]
 
-## json-interface
+### json-interface
 
 A Go package that has functions to unmarshall the json files for teams, personnel and game logs. Also includes test code for each type of data.
 
 1. game.go :
 
-- func loadGames(fname string) ([]game, error)
-- returns a slice of game logs or an error
+- func LoadGames(fname string) ([]Game, error)
+- contains the definition of the 'Game' struct
+- returns a slice of gamelog data or an error
 
 2. personnel.go :
 
-- func loadIDs(fname string) ([]id, error)
+- func LoadPersonnel(fname string) ([]Person, error)
+- contains the definition of the 'Person' struct
 - returns a slice of personnel data or an error
 
 3. team.go :
 
-- func loadTeams(fname string) ([]team, error)
+- func LoadTeams(fname string) ([]Team, error)
+- contains the defiition of the 'Team' struct
 - returns a slice of team data or an error
 
-## loader-go
+### loader-go
 
 A Go program that takes the gamelog json files and loads them into a local mongodb database.
 
-## temporary
+### temporary
 
 - misc
 - json-interface-games

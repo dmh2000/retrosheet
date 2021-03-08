@@ -1,4 +1,4 @@
-package json_interface
+package jsontypes
 
 import (
 	"encoding/json"
@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 )
 
-// The GO struct to be populated by unmarshal
-type game struct {
+// Game - The contents of one game from a gamelog
+type Game struct {
 	Date                     string `json:"Date,omitempty"`
 	GameNumber               string `json:"GameNumber,omitempty"`
 	DayOfWeek                string `json:"DayOfWeek,omitempty"`
@@ -171,23 +171,24 @@ type game struct {
 	AcquisitionInfo          string `json:"AcquisitionInfo,omitempty"`
 }
 
-var line = []byte(`{"date":"20100404","gameNumber":"0","dayOfWeek":"Sun","visitorTeam":"NYA","visitorLeague":"AL","visitorGameNumber":"1","homeTeam":"BOS","homeLeague":"AL","homeGameNumber":"1","visitorScore":"7","homeScore":"9","lengthInOuts":"51","dayOrNight":"N","completion":"","forfeit":"","protest":"","parkID":"BOS07","attendance":"37440","duration":"226","visitorLine":"020300200","homeLine":"01001331x","visitorAtBats":"37","visitorHits":"12","visitorDbls":"2","visitorTriples":"0","visitorHomers":"2","visitorRBI":"6","visitorSacHits":"0","visitorSacFlies":"0","visitorHitByPitch":"0","visitorWalks":"6","visitorIntentionalWalks":"0","visitorStrikeouts":"2","visitorSteals":"2","visitorStealCaught":"0","visitorGrounded":"2","visitorCatcherIfc":"0","visitorLeftOnBase":"9","visitorPitchers":"5","visitorIndiERs":"8","visitorTeamERs":"8","visitorWilds":"1","visitorBalks":"0","visitorPutouts":"24","visitorAssists":"9","visitorErrors":"1","visitorPassedBalls":"1","visitorDoublePlays":"1","visitorTriplePlays":"0","homeAtBats":"34","homeHits":"12","homeDbls":"3","homeTriples":"1","homeHomers":"1","homeRBI":"8","homeSacHits":"0","homeSacFlies":"1","homeHitByPitch":"0","homeWalks":"4","homeIntentionalWalks":"0","homeStrikeouts":"5","homeSteals":"0","homeStealCaught":"0","homeGrounded":"0","homeCatcherIfc":"0","homeLeftOnBase":"6","homePitchers":"6","homeIndiERs":"7","homeTeamERs":"7","homeWilds":"1","homeBalks":"0","homePutouts":"27","homeAssists":"15","homeErrors":"0","homePassedBalls":"0","homedoublePlays":"2","homeTriplePlays":"0","umpireHomeID":"westj901","umpireHomeName":"Joe West","umpFirstBaseID":"herna901","umpFirstBaseName":"Angel Hernandez","umpSecondBaseID":"schrp901","umpSecondBaseName":"Paul Schrieber","umpThirdBaseID":"drakr901","umpThirdBaseName":"Rob Drake","umpLeftFieldID":"","umpLeftFieldName":"(none)","umpRightFieldID":"","umpRightFieldName":"(none)","visitorManagerID":"giraj001","visitorManagerName":"Joe Girardi","homeManagerID":"frant001","homeMangerName":"Terry Francona","winningPitcherID":"okajh001","winningPitcherName":"HIDeki Okajima","losingPitcherID":"parkc002","losingPitcherName":"Chan Ho Park","savingPitcherID":"papej001","savingPitcherName":"Jonathan Papelbon","rbiBatterID":"","rbiBatterName":"(none)","visitorStarterID":"sabac001","visitorStarterName":"CC Sabathia","homeStarterID":"beckj002","homeStarterName":"Josh Beckett","visitorLineup1ID":"jeted001","visitorLineup1Name":"Derek Jeter","visitorLineup1Pos":"6","visitorLineup2ID":"johnn001","visitorLineup2Name":"Nick Johnson","visitorLineup2Pos":"10","visitorLineup3ID":"teixm001","visitorLineup3Name":"Mark Teixeira","visitorLineup3Pos":"3","visitorLineup4ID":"rodra001","visitorLineup4Name":"Alex Rodriguez","visitorLineup4Pos":"5","visitorLineup5ID":"canor001","visitorLineup5Name":"Robinson Cano","visitorLineup5Pos":"4","visitorLineup6ID":"posaj001","visitorLineup6Name":"Jorge Posada","visitorLineup6Pos":"2","visitorLineup7ID":"granc001","visitorLineup7Name":"Curtis Granderson","visitorLineup7Pos":"8","visitorLineup8ID":"swisn001","visitorLineup8Name":"Nick Swisher","visitorLineup8Pos":"9","visitorLineup9ID":"gardb001","visitorLineup9Name":"Brett Gardner","visitorLineup9Pos":"7","homeLineup1ID":"ellsj001","homeLineup1Name":"Jacoby Ellsbury","homeLineup1Pos":"7","homeLineup2ID":"pedrd001","homeLineup2Name":"Dustin Pedroia","homeLineup2Pos":"4","homeLineup3ID":"martv001","homeLineup3Name":"Victor Martinez","homeLineup3Pos":"2","homeLineup4ID":"youkk001","homeLineup4Name":"Kevin Youkilis","homeLineup4Pos":"3","homeLineup5ID":"ortID001","homeLineup5Name":"DavID Ortiz","homeLineup5Pos":"10","homeLineup6ID":"belta001","homeLineup6Name":"Adrian Beltre","homeLineup6Pos":"5","homeLineup7ID":"drewj001","homeLineup7Name":"J.D. Drew","homeLineup7Pos":"9","homeLineup8ID":"camem001","homeLineup8Name":"Mike Cameron","homeLineup8Pos":"8","homeLineup9ID":"scutm001","homeLineup9Name":"Marco Scutaro","homeLineup9Pos":"6","additionalInfo":"","acquisitionInfo":"Y"}`)
 
-func unmarshalGame(line []byte) (game, error) {
-	var g game
+func unmarshalGame(line []byte) (Game, error) {
+	var g Game
 	err := json.Unmarshal(line, &g)
 	fmt.Println(g)
 	return g, err
 
 }
 
-func loadGames(fname string) ([]game, error) {
+// LoadGames - loads the games from a single gamelog file
+// It returns a slice containing the game data from the specified file (fname)
+func LoadGames(fname string) ([]Game, error) {
 	jsonBlob, err := ioutil.ReadFile(fname)
 	if err != nil {
 		return nil, err
 	}
 
-	var games []game
+	var games []Game
 
 	err = json.Unmarshal(jsonBlob, &games)
 	if err != nil {
@@ -197,6 +198,3 @@ func loadGames(fname string) ([]game, error) {
 	return games, nil
 }
 
-func printGame(g game) {
-
-}

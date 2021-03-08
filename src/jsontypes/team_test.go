@@ -1,4 +1,4 @@
-package json_interface
+package jsontypes
 
 import (
 	"fmt"
@@ -9,11 +9,11 @@ import (
 // TestTeamFile ...
 func TestTeamFile(t *testing.T) {
 	var fname = "../../data/teams.json"
-    var teams []team
+    var teams []Team
 
-	teams = make([]team,0)
+	teams = make([]Team,0)
 
-	teams,err := loadTeams(fname)
+	teams,err := LoadTeams(fname)
 	if err != nil {
 		t.Error("load failed",err)
 	}
@@ -25,11 +25,11 @@ func TestTeamFile(t *testing.T) {
 
 func TestTeamStruct(t *testing.T) {
 	var fname = "../../data/teams.json"
-    var teams []team
+    var teams []Team
 
-	teams = make([]team,0)
+	teams = make([]Team,0)
 
-	teams,err := loadTeams(fname)
+	teams,err := LoadTeams(fname)
 
 	if err != nil {
 		t.Error("load failed",err)

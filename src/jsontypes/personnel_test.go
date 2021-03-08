@@ -1,4 +1,4 @@
-package json_interface
+package jsontypes
 
 import (
 	"fmt"
@@ -6,13 +6,13 @@ import (
 	"testing"
 )
 
-func TestIdStruct(t *testing.T) {
+func TestPersonnel(t *testing.T) {
 	var fname = "../../data/ids.json"
-    var ids []id
+    var ids []Person
 
-	ids = make([]id,0)
+	ids = make([]Person,0)
 
-	ids,err := loadIDs(fname)
+	ids,err := LoadPersonnel(fname)
 
 	if err != nil {
 		t.Error("load failed",err)

@@ -1,4 +1,4 @@
-package json_interface
+package jsontypes
 
 import (
 	"fmt"
@@ -9,11 +9,11 @@ import (
 // TestGameFile ...
 func TestGameFile(t *testing.T) {
 	var fname = "../../data/games/json/gl2013.json"
-    var games []game
+    var games []Game
 
-	games = make([]game,0)
+	games = make([]Game,0)
 
-	games,err := loadGames(fname)
+	games,err := LoadGames(fname)
 	if err != nil {
 		t.Error("load failed",err)
 	}
@@ -25,11 +25,11 @@ func TestGameFile(t *testing.T) {
 
 func TestGameStruct(t *testing.T) {
 	var fname = "../../data/games/json/gl2013.json"
-    var games []game
+    var games []Game
 
-	games = make([]game,0)
+	games = make([]Game,0)
 
-	games,err := loadGames(fname)
+	games,err := LoadGames(fname)
 
 	if err != nil {
 		t.Error("load failed",err)

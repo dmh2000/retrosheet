@@ -1,4 +1,4 @@
-package json_interface
+package jsontypes
 
 import (
 	"encoding/json"
@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 )
 
-// The GO struct to be populated by unmarshal
-type team struct {
+// Team - The GO struct to be populated by unmarshal
+type Team struct {
 	Abbr        string `json:"Abbr,omitempty"`
 	League      string `json:"League,omitempty"`
 	City        string `json:"City,omitempty"`
@@ -16,22 +16,23 @@ type team struct {
 	LastYear    string `json:"LastYear,omitempty"`
 }
 
-
-func unmarshalTeam(line []byte) (team, error) {
-	var g team
+func unmarshalTeam(line []byte) (Team, error) {
+	var g Team
 	err := json.Unmarshal(line, &g)
 	fmt.Println(g)
 	return g, err
 
 }
 
-func loadTeams(fname string) ([]team, error) {
+// LoadTeams - load team data from the specified file
+// returns a slice of Team data or an error
+func LoadTeams(fname string) ([]Team, error) {
 	jsonBlob, err := ioutil.ReadFile(fname)
 	if err != nil {
 		return nil, err
 	}
 
-	var teams []team
+	var teams []Team
 
 	err = json.Unmarshal(jsonBlob, &teams)
 	if err != nil {
