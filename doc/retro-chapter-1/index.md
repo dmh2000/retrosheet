@@ -68,7 +68,7 @@ I tried to put together a step by step process that will end up with something u
 - Chapter 5 - Simple Queries
   - a Go package to execute some simple queries using a cli.
 - Chapter 6 and more
-  - I promise to complete chapters 1-5. After that I envision creating a web app as a front end for queries to the Mongodb database. That's going to be a lot of work so no promises for 6...
+  - I promise to complete chapters 1-5. After that I envision creating a web app as a front end for queries to the Mongodb database. That's going to be a lot of work so no promises for 6 on. Wow is coming out with a big patch that might take up a bunch of my time.
 
 #### The Stack
 
