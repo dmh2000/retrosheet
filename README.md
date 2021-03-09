@@ -6,9 +6,11 @@
 
 Additional documentation.
 
-### csv-transform
+### src/csv-transform
 
-The following code uses node.js
+The following code uses node.js because it was easy and quick to
+have a node program read the retrosheet csv files and transform
+them to json.
 
 1. csv-transform-games
 
@@ -27,31 +29,40 @@ This file contains information about the teams that appear in the gamelogs.
 Code that transforms the csv file with data about personnel into json files.
 (Personnel)[https://www.retrosheet.org/retroID.htm]
 
-### json-interface
+### src/jsontypes
 
 A Go package that has functions to unmarshall the json files for teams, personnel and game logs. Also includes test code for each type of data.
 
 1. game.go :
 
+- defines the Game type representing a single game
 - func LoadGames(fname string) ([]Game, error)
 - contains the definition of the 'Game' struct
 - returns a slice of gamelog data or an error
 
 2. personnel.go :
 
+- defines the Person type representing a single person
 - func LoadPersonnel(fname string) ([]Person, error)
 - contains the definition of the 'Person' struct
 - returns a slice of personnel data or an error
 
 3. team.go :
 
+- defiones the Team type representing a single team
 - func LoadTeams(fname string) ([]Team, error)
 - contains the defiition of the 'Team' struct
 - returns a slice of team data or an error
 
-### loader-go
+### src/loader
 
 A Go program that takes the gamelog json files and loads them into a local mongodb database.
+
+#### Mongodb structure
+
+- collection name is set by environment variable RETROSHEET_COLLECTION
+
+### src/queries
 
 ### temporary
 

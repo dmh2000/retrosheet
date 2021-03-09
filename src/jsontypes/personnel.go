@@ -7,13 +7,13 @@ import (
 
 // Person - one instance of the data from a personnel json file
 type Person struct {
-	ID         string `json:"ID,omitempty"`
-	Last       string `json:"Last,omitempty"`
-	First      string `json:"First,omitempty"`
-	PlayDebut  string  `json:"PlayDebut,omitempty"`
-	MgrDebut   string `json:"MgrDebut,omitempty"`
-	CoachDebut string `json:"CoachDebut,omitempty"`
-	UmpDebut   string  `json:"UmpDebut,omitempty"`
+	ID             string `json:"ID,omitempty"`
+	Last           string `json:"Last,omitempty"`
+	First          string `json:"First,omitempty"`
+	PlayerDebut    string `json:"PlayerDebut,omitempty"`
+	ManagerDebut   string `json:"ManagerDebut,omitempty"`
+	CoachDebut     string `json:"CoachDebut,omitempty"`
+	UmpireDebut    string `json:"UmpireDebut,omitempty"`
 }
 
 // GetPersonFields get the fieldnamesf for an instance of Person
@@ -23,10 +23,10 @@ func GetPersonFields() []string {
 		"ID",
 		"Last",
 		"First",
-		"PlayDebut",
-		"MgrDebut",
+		"PlayerDebut",
+		"ManagerDebut",
 		"CoachDebut",
-		"UmpDebut",
+		"UmpireDebut",
 	  }
 }
 

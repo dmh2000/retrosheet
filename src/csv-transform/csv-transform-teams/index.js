@@ -10,7 +10,7 @@ const idFields = [
   "LastYear",
 ];
 
-function TeamsToJson(infile, outfile) {
+function TeamsToJson(infile) {
   // read the file
   const data = fs.readFileSync(infile, "UTF-8");
 
@@ -39,8 +39,11 @@ function TeamsToJson(infile, outfile) {
   json = "[\n" + json + "\n]\n";
 
   // output
-  fs.writeFileSync(outfile, json);
+  console.log(json);
 }
 
-console.log(process.argv[2]);
-TeamsToJson(process.argv[2], "teams.json");
+if (process.argv.length < 3) {
+  console.error("node index.js <source> >stdout");
+  process.exit(1);
+}
+TeamsToJson(process.argv[2]);

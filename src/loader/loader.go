@@ -3,32 +3,26 @@ package loader
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log"
 	"os"
 	"path"
-	"time"
 
 	"github.com/dmh2000/retrosheet/src/jsontypes"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func loadall() {}
-
-// wrap 
-type mongoOp func(client *mongo.Client) error
- 
- // LoadPersonnel ...
+// LoadPersonnel ...
  func LoadPersonnel(fname string) error {
 	var personnel []jsontypes.Person
 
-	uri := "mongodb://dmh2000@localhost:27017"
+	uri := "mongodb://localhost:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
@@ -42,9 +36,34 @@ type mongoOp func(client *mongo.Client) error
 		return err
 	}
 
-	// return an error until the write to mongodb works
-	if len(personnel) > 0 {
-		return errors.New("no mongdb yet")
+	// interface slice to contain bson marshalled personnel records
+	dox := make([]interface{},0)
+
+	// marshall all the documents into 'dox'
+	for _,v := range personnel {
+		// marshall the element into a byte slice
+		b , err := bson.Marshal(v)
+		if err != nil {
+			return err
+		}
+		// append to array of documents
+		dox = append(dox,b)
+	}
+
+	// get the personnel collection
+	coll := client.Database("retrosheet").Collection("personnel")
+
+	// insert the documents
+	res, err  := coll.InsertMany(ctx,dox)
+
+	// insertion failed
+	if err != nil {
+		return err
+	}
+
+	// some other fail, auth error can do this
+	if res == nil {
+		return errors.New("no result : authorization?")
 	}
 		
 	defer client.Disconnect(ctx)
@@ -56,12 +75,12 @@ type mongoOp func(client *mongo.Client) error
  func LoadTeams(fname string) error {
     var teams []jsontypes.Team
 
-	uri := "mongodb://dmh2000@localhost:27017"
+	uri := "mongodb://localhost:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
@@ -75,9 +94,34 @@ type mongoOp func(client *mongo.Client) error
 		return err
 	}
 
-	// return an error until the write to mongodb works
-	if len(teams) > 0 {
-		return errors.New("no mongdb yet")
+	// byte slice to contain bson marshalled personnel records
+	dox := make([]interface{},0)
+
+	// marshall all the documents into 'dox'
+	for _,v := range teams {
+		// marshall the element into a byte slice
+		b , err := bson.Marshal(v)
+		if err != nil {
+			return err
+		}
+		// append to array of documents
+		dox = append(dox,b)
+	}
+
+	// get the personnel collection
+	coll := client.Database("retrosheet").Collection("teams")
+
+	// insert the documents
+	res, err  := coll.InsertMany(ctx,dox)
+
+	// insertion failed
+	if err != nil {
+		return err
+	}
+
+	// some other fail, auth error can do this
+	if res == nil {
+		return errors.New("no result : authorization?")
 	}
 
 	defer client.Disconnect(ctx)
@@ -85,18 +129,18 @@ type mongoOp func(client *mongo.Client) error
 	return nil
  }
 
-// LoadGame loads a single gamelog file
+// LoadGameLog loads a single gamelog file
 // gamelog files are organized by year
 // there are many gamelog files each containing multiple games
-func LoadGame(fname string) error {
+func LoadGameLog(fname string) error {
 	var games []jsontypes.Game
 
-	uri := "mongodb://dmh2000@localhost:27017"
+	uri := "mongodb://localhost:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
@@ -104,25 +148,49 @@ func LoadGame(fname string) error {
 		log.Fatal(err)
 	}
 
-
     // get the game data from the json file
 	games, err = jsontypes.LoadGamelog(fname)
 	if err != nil {
 		return err
 	}
 
-	// return an error until the write to mongodb works
-	if len(games) > 0 {
-		fmt.Println(len(games))
-		return errors.New("no mongdb yet")
+	// byte slice to contain bson marshalled personnel records
+	dox := make([]interface{},0)
+
+	// marshall all the documents into 'dox'
+	for _,v := range games {
+		// marshall the element into a byte slice
+		b , err := bson.Marshal(v)
+		if err != nil {
+			return err
+		}
+		// append to array of documents
+		dox = append(dox,b)
 	}
+
+	// get the personnel collection
+	coll := client.Database("retrosheet").Collection("games")
+
+	// insert the documents
+	res, err  := coll.InsertMany(ctx,dox)
+
+	// insertion failed
+	if err != nil {
+		return err
+	}
+
+	// some other fail, auth error can do this
+	if res == nil {
+		return errors.New("no result : authorization?")
+	}
+
 
 	defer client.Disconnect(ctx)
 
 	return nil
  }
 
-// LoadGames loads all gamelog files from the specifried directory
+// LoadGames loads ALL gamelog files from the specifried directory
 // gamelog files are organized by year
 // there are many gamelog files each containing multiple games
 // Note : as of the date of this file, there are over 200,000 
@@ -132,12 +200,12 @@ func LoadGames(dirname string) error {
 	var games []jsontypes.Game
 	var gamelog []jsontypes.Game
 
-	uri := "mongodb://dmh2000@localhost:27017"
+	uri := "mongodb://localhost:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
@@ -145,6 +213,7 @@ func LoadGames(dirname string) error {
 		log.Fatal(err)
 	}
 
+	// create a slice of ALL games
 	// get the game data from all the files in the specified directory
 	// iterate over the directory containing the game files
 	games = make([]jsontypes.Game,0)
@@ -169,13 +238,101 @@ func LoadGames(dirname string) error {
 		games = append(games,gamelog...)
 	}
 
-	// return an error until the write to mongodb works
-	if len(games) > 0 {
-		fmt.Println(len(games))
-		return errors.New("no mongdb yet")
+
+	// interface slice to contain bson marshalled personnel records
+	dox := make([]interface{},0)
+
+	// marshall all the documents into 'dox'
+	for _,v := range games {
+		// marshall the element into a byte slice
+		b , err := bson.Marshal(v)
+		if err != nil {
+			return err
+		}
+		// append to array of documents
+		dox = append(dox,b)
+	}
+
+	// get the personnel collection
+	coll := client.Database("retrosheet").Collection("games")
+
+	// insert the documents
+	res, err  := coll.InsertMany(ctx,dox)
+
+	// insertion failed
+	if err != nil {
+		return err
+	}
+
+	// some other fail, auth error can do this
+	if res == nil {
+		return errors.New("no result : authorization?")
 	}
 	
 	defer client.Disconnect(ctx)
+
+	return nil
+}
+
+// DropRetrosheet drop the retrosheet database
+// in prep for repopulation
+func DropRetrosheet() error {
+	uri := "mongodb://localhost:27017"
+	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
+	if err != nil {
+		log.Fatal(err)
+	}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// drop retrosheet
+	err = client.Database("retrosheet").Drop(ctx)
+	if err != nil {
+		return err
+	}
+			
+	defer client.Disconnect(ctx)
+
+	return nil
+}
+
+// PopulateRetrosheet is used to repopulate the complete retrosheet database
+// it drops the existing db and reloads personnel, teams and games
+// it requires the file and directory names for the data files
+func PopulateRetrosheet() error {
+	var err error
+	var personnel = os.Getenv("RETROSHEET") + "/personnel.json"
+	var teams = os.Getenv("RETROSHEET") + "/teams.json"
+	var games = os.Getenv("RETROSHEET") + "/games/json/"
+
+	// delete the database
+	err = DropRetrosheet()
+	if err != nil {
+		return err
+	}
+
+	// load the personnel  data
+	err = LoadPersonnel(personnel)
+	if err != nil {
+		return err
+	}
+
+	// load the team data
+	err = LoadTeams(teams)
+	if err != nil {
+		return err
+	}
+
+	// load the game data
+	err = LoadGames(games)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

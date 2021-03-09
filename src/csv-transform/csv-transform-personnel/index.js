@@ -5,13 +5,13 @@ const idFields = [
   "ID",
   "Last",
   "First",
-  "PlayDebut",
-  "MgrDebut",
+  "PlayerDebut",
+  "ManagerDebut",
   "CoachDebut",
-  "UmpDebut",
+  "UmpireDebut",
 ];
 
-function IDsToJson(infile, outfile) {
+function IDsToJson(infile) {
   // read the file
   const data = fs.readFileSync(infile, "UTF-8");
 
@@ -40,8 +40,11 @@ function IDsToJson(infile, outfile) {
   json = "[\n" + json + "\n]\n";
 
   // output
-  fs.writeFileSync(outfile, json);
+  console.log(json);
 }
 
-console.log(process.argv[2]);
-IDsToJson(process.argv[2], "ids.json");
+if (process.argv.length < 3) {
+  console.log("node index.js <source> <destination>");
+  process.exit(1);
+}
+IDsToJson(process.argv[2]);
