@@ -1,4 +1,4 @@
-# Transform a Retrosheet 'id' File Into A JSON File
+# Transform a Retrosheet 'team' File Into A JSON File
 
 This version uses JavaScript because it has a convenient
 scheme for reading and parsing a csv file. Its a bit
