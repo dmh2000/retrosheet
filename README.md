@@ -1,80 +1,38 @@
 # DMH2000's Retrosheet Baseball Data Utilities
 
-## Contents
+## Documentation
 
-### doc
+Usage docs are in ./doc
 
-Additional documentation.
+1. [Chapter 1 - Overview](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-1/index.md)
 
-### src/csv-transform
+- Information about [Retrosheet](https://www.retrosheet.org/)
+- Data downloads
 
-The following code uses node.js because it was easy and quick to
-have a node program read the retrosheet csv files and transform
-them to json.
+2. [Chapter 2 - Transform CSV](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-2/index.md)
 
-1. csv-transform-games
+- Transforming Retrosheet data to JSON files
+- uses node.js instead of Go (sorry)
 
-Code that transforms the gamelog csv files from retrosheet.org into json files
-These files contain detailed information about specific games by season and year.
-(Game Logs)[https://www.retrosheet.org/gamelogs]
+3. [Chapter 3 - Read JSON](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-3/index.md)
 
-2. csv-transform-teams
+- A Go package that reads the JSON files and converts them to Go objects
+- Includes relevant tests
+- Used in Chapter 4 for uploading to Mongodb
 
-Code that transforms the teams csv file from retrosheet.org into json files
-This file contains information about the teams that appear in the gamelogs.
-(Teams)[https://www.retrosheet.org/TeamIDs.htm]
+4. [Chapter 4 - Upload to Mongodb](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-4/index.md)
 
-3. csv-transform-ids
+- A Go package that uses the package from Chapter 3 to read the JSON data and upload it to mongodb documents.
+- Includes relevant tests
 
-Code that transforms the csv file with data about personnel into json files.
-(Personnel)[https://www.retrosheet.org/retroID.htm]
+5. [Chapter 5 - Simple Queries](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-5/index.md)
 
-### src/jsontypes
+- A Go package that provides some simple queries to the Mongodb database.
 
-A Go package that has functions to unmarshall the json files for teams, personnel and game logs. Also includes test code for each type of data.
-
-1. game.go :
-
-- defines the Game type representing a single game
-- func LoadGames(fname string) ([]Game, error)
-- contains the definition of the 'Game' struct
-- returns a slice of gamelog data or an error
-
-2. personnel.go :
-
-- defines the Person type representing a single person
-- func LoadPersonnel(fname string) ([]Person, error)
-- contains the definition of the 'Person' struct
-- returns a slice of personnel data or an error
-
-3. team.go :
-
-- defiones the Team type representing a single team
-- func LoadTeams(fname string) ([]Team, error)
-- contains the defiition of the 'Team' struct
-- returns a slice of team data or an error
-
-### src/loader
-
-A Go program that takes the gamelog json files and loads them into a local mongodb database.
-
-#### Mongodb structure
-
-- collection name is set by environment variable RETROSHEET_COLLECTION
-
-### src/queries
-
-### temporary
-
-- misc
-- json-interface-games
-- json-interface-ids
-- loader
-
-# RETROSHEET
+## RETROSHEET
 
 The code in this repo my own creation and is not part of, supported by or endorsed by
-retrosheet.org. The following are the license terms for use of the
+retrosheet.org. The following are the (very generous) license terms for use of the
 retrosheet data.
 
 ## RETROSHEET DATA

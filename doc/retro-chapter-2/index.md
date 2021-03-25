@@ -58,6 +58,7 @@ If you used the directory layout from chapter 1 then you can execute the followi
 
 ### Gamelogs
 
+- this produces one file for each baseball season in the downloaded gamelogs. Each file has all the games for that season.
 - cd to csv-transform/csv-transform-games
 - npm install
 - node index.js [directory with retrosheet gamelog .TXT files] [output directory]
@@ -65,14 +66,16 @@ If you used the directory layout from chapter 1 then you can execute the followi
 
 ### Teams
 
+- the output file is named 'teams.json'
 - cd to csv-transform/csv-transform-teams
 - npm install
 - node index.js [path to data/teamabr.csv] >[path to data/teamabr.json]
-- "$ node index.js ~/projects/baseball/data/teamabr.csv >~/projects/baseball/data/teamabr.json"
+- "$ node index.js ~/projects/baseball/data/teamabr.csv >~/projects/baseball/data/teams.json"
 
 ### Personnel
 
+- The output file is named 'personnel.json'
 - cd to csv-transform/csv-transform-personnel
 - npm install
 - node index.js [path to data/retroid.csv] >[path to data/retroid.json]
-- "$ node index.js ~/projects/baseball/data/retroid.csv >~/projects/baseball/data/retroid.json"
+- "$ node index.js ~/projects/baseball/data/retroid.csv >~/projects/baseball/data/personnel.json"

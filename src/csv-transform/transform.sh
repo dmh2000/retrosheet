@@ -19,10 +19,10 @@ cd ..
 # Teams
 cd csv-transform-teams
 echo "------" $(basename `pwd`) "------"
-node index.js ~/projects/baseball/data/teamabr.csv >~/projects/baseball/data/teamabr.json
+node index.js ~/projects/baseball/data/teamabr.csv >~/projects/baseball/data/teams.json
 cd ..
 
 # Personnel
 cd csv-transform-personnel
 echo "------" $(basename `pwd`) "------"
-node index.js ~/projects/baseball/data/retroid.csv >~/projects/baseball/data/retroid.json
+node index.js ~/projects/baseball/data/retroid.csv >~/projects/baseball/data/personnel.json
