@@ -4,13 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js  ../../data/games/csv/1871_2020 ../../data/games/json"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "david howard",
   "license": "ISC",
   "dependencies": {
-    "csv": "^5.3.2",
-    "mongodb": "^3.5.6"
+    "csv": "^5.3.2"
   }
 }

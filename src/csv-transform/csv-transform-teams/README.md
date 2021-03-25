@@ -1,8 +1,9 @@
-# Transform a Set of Retrosheet 'gamelog' Files Into A JSON File
+### Teams
 
-This version uses JavaScript because it has a convenient
-scheme for reading and parsing a csv file. Its a bit
-easier to use than the go package and more widely used.
+- cd to csv-transform/csv-transform-teams
+- npm install
+- node index.js [path to data/teamabr.csv] >[path to data/teamabr.json]
+- "$ node index.js ~/projects/baseball/data/teamabr.csv >~/projects/baseball/data/teamabr.json"
 
 - See the top level README file for information on Retrosheet and its license
 - the Retrosheet license is free to use with some attribution

@@ -70,16 +70,81 @@ I tried to put together a step by step process that will end up with something u
 - Chapter 6 and more
   - I promise to complete chapters 1-5. After that I envision creating a web app as a front end for queries to the Mongodb database. That's going to be a lot of work so no promises for 6 on. Wow is coming out with a big patch that might take up a bunch of my time.
 
+#### My Coding Approach
+
+I am a fan of not optimizing my code. Read that again. I am not against optimizing, I just prefer to avoid it unless I need it. I don't try to optimize for speed (prematurely). Nothing in chapters 2-4 have any speed requirement. Chapter 5 (queries) might need a little more focus since its the beginning of the user interface.
+
+That also applies to making my code concise. You'll see that I have some repetition across some functions. I'd rather have each function simple and easy to understand and kind of standalone. At least for a quasi-tutorial like this. I refactor for DRY when I need to. In this project I chose not to. The drawback of this approach is that it can lead to cut-and-paste errors or diverging snippets that should be the same. I ran into those problems a couple of times.
+
+I use TDD with the Go native test framework. Since this isn't production stuff I probably don't test as comprehensively as I could. I find the Go native test framework along with Visual Studio Code provides a way to execute individual tests so conveniently that it makes incremental development extremely easy.
+
 #### The Stack
 
 Here's what I use for my stack:
 
+- Visual Studio Code
+  - running on Windows with remote to my Linux box.
+- Linux (Mint)
+  - all my actual code is resident on the Linux box. All execution is on Linux. Should work on Windows or Mac.
 - Chapters 2 - 5
   - Node.js
   - Go
   - Mongodb
-- Chapters 6 ...
+- Chapters 6 ...?
   - React
   - Graphql
   - Nginx
   - Docker
+
+## Data Downloads
+
+- make a directory to store the downloaded files
+- if you name this directory 'data' and create it adjacent to the cloned retrosheet repo then you can use some scripts later on. See the directory structure below.
+- Download from Retrosheet.org
+  - [Team Abbreviations](https://www.retrosheet.org/TEAMABR.TXT)
+    - [the reference for this file is at ](https://www.retrosheet.org/TeamIDs.htm)
+    - this file contains abbreviations and data about teams
+    - this file can be downloaded and renamed teamabr.csv without any editing
+  - [Retrosheet IDs](https://www.retrosheet.org/retroID.htm)
+    - [the reference for this file is at ](https://www.retrosheet.org/retroID.htm)
+    - this contains player id, name and dates
+    - this file downloads with some text at the beginning that needs to be removed
+    - copy the file to retroid.csv, edit it and remove everything down to the first player id
+  - [Game Logs](https://www.retrosheet.org/gamelogs/gl1871_2020.zip)
+    - [the reference for this file is at](https://www.retrosheet.org/gamelogs/glfields.txt)
+    - download and unzip to 'retrosheet'
+    - you can download various subsets of game logs
+    - download the reference glfields.txt if you want a local copy
+
+This is the directory structure I used. Its not required but there are some scripts set up for this layout.
+
+  <pre>
+.
+├── data
+│   |── glfields.txt
+│   |── teamabr.txt
+│   |── teamabr.csv
+│   |── teamabr.json (converted)
+│   |── retroid.csv
+│   |── retroid.txt
+│   |── retroid.json (converted)
+│   └── gamelogs
+│       ├── csv (downloaded gamelogs)
+│       └── json (converted gamelogs)
+└── retrosheet
+    ├── doc
+    │   ├── retro-chapter-1
+    │   ├── retro-chapter-2
+    │   ├── retro-chapter-3
+    │   ├── retro-chapter-4
+    │   └── retro-chapter-5
+    └── src
+        ├── csv-transform
+        │   ├── csv-transform-games
+        │   ├── csv-transform-personnel
+        │   └── csv-transform-teams
+        ├── jsontypes
+        ├── loader
+        └── queries
+
+  </pre>
