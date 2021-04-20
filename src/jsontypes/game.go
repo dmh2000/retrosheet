@@ -2,7 +2,6 @@ package jsontypes
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path"
@@ -173,15 +172,6 @@ type Game struct {
 	AcquisitionInfo          string `json:"AcquisitionInfo,omitempty"`
 }
 
-
-func unmarshalGame(line []byte) (Game, error) {
-	var g Game
-	err := json.Unmarshal(line, &g)
-	fmt.Println(g)
-	return g, err
-
-}
-
 // LoadGamelog - loads the games from a single gamelog file
 // It returns a slice containing the game data from the specified file (fname)
 func LoadGamelog(fname string) ([]Game, error) {
@@ -190,8 +180,10 @@ func LoadGamelog(fname string) ([]Game, error) {
 		return nil, err
 	}
 
+	// one gamelog has multiple games
 	var games []Game
 
+	// read the json object into the slice of Games
 	err = json.Unmarshal(jsonBlob, &games)
 	if err != nil {
 		return nil, err
@@ -208,17 +200,18 @@ func LoadGames(dirname string) ([]Game, error) {
 	var gamelog []Game
 
 	// iterate over the directory containing the game files
-	games = make([]Game,0)
-	dirs, err := os.ReadDir(dirname)
-	for _,dir := range dirs {
+	// and load all games into the games slice
+	games = make([]Game,0,250000)
+	dirents, err := os.ReadDir(dirname)
+	for _,ent := range dirents {
 
 		// ignore non-json files
-		if path.Ext(dir.Name()) != "json" {
+		if path.Ext(ent.Name()) != ".json" {
 			continue
 		}
 		
 		// fs.Direntry Name returns only final element of path
-		fname := dirname + "/" + dir.Name()
+		fname := dirname + "/" + ent.Name()
 
 		// get the game data from the json file
 		gamelog, err = LoadGamelog(fname)
@@ -226,7 +219,7 @@ func LoadGames(dirname string) ([]Game, error) {
 			return nil, err
 		}
 
-		// merge it to the total games
+		// merge games in the gamelog to the total games
 		games = append(games,gamelog...)
 	}
 

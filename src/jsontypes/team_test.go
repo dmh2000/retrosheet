@@ -1,9 +1,7 @@
 package jsontypes
 
 import (
-	"fmt"
 	"os"
-	"reflect"
 	"testing"
 )
 
@@ -39,11 +37,12 @@ func TestTeamStruct(t *testing.T) {
 		t.Error("load failed (2)")
 	}
 
-	// use reflect to print the struct values
-	v := reflect.ValueOf(teams[0])
-	u := v.Type()
+	// // uncomment this to print and verify the fields of this instance are correct
+	// // use reflect to print the struct values
+	// v := reflect.ValueOf(teams[0])
+	// u := v.Type()
 
-	for i:=0;i<v.NumField();i++ {
-		fmt.Printf("%v : %v\n",u.Field(i).Name,v.Field(i).Interface())
-	}
+	// for i:=0;i<v.NumField();i++ {
+	// 	fmt.Printf("%v : %v\n",u.Field(i).Name,v.Field(i).Interface())
+	// }
 }
