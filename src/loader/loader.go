@@ -5,7 +5,6 @@ import (
 	"errors"
 	"log"
 	"os"
-	"path"
 
 	"github.com/dmh2000/retrosheet/src/jsontypes"
 	"go.mongodb.org/mongo-driver/bson"
@@ -14,10 +13,9 @@ import (
 )
 
 // LoadPersonnel ...
- func LoadPersonnel(fname string) error {
+ func LoadPersonnel(uri string, fname string) error {
 	var personnel []jsontypes.Person
 
-	uri := "mongodb://localhost:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
@@ -31,7 +29,7 @@ import (
 	}
 
 	// read the personnel json data
-	personnel, err = jsontypes.LoadPersonnel(fname)
+	personnel, err = jsontypes.ReadPersonnel(fname)
 	if err != nil {
 		return err
 	}
@@ -72,10 +70,9 @@ import (
  }
 
  // LoadTeams loads the teams.json file
- func LoadTeams(fname string) error {
+ func LoadTeams(uri, fname string) error {
     var teams []jsontypes.Team
 
-	uri := "mongodb://localhost:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
@@ -132,10 +129,9 @@ import (
 // LoadGameLog loads a single gamelog file
 // gamelog files are organized by year
 // there are many gamelog files each containing multiple games
-func LoadGameLog(fname string) error {
+func LoadGameLog(uri string, fname string) error {
 	var games []jsontypes.Game
 
-	uri := "mongodb://localhost:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
@@ -149,7 +145,7 @@ func LoadGameLog(fname string) error {
 	}
 
     // get the game data from the json file
-	games, err = jsontypes.LoadGamelog(fname)
+	games, err = jsontypes.ReadGamelog(fname)
 	if err != nil {
 		return err
 	}
@@ -196,11 +192,9 @@ func LoadGameLog(fname string) error {
 // Note : as of the date of this file, there are over 200,000 
 // games in all the gamelogs, so this function can take several seconds
 // to execute
-func LoadGames(dirname string) error {
+func LoadGames(uri, dirname string) error {
 	var games []jsontypes.Game
-	var gamelog []jsontypes.Game
 
-	uri := "mongodb://localhost:27017"
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
@@ -217,27 +211,10 @@ func LoadGames(dirname string) error {
 	// get the game data from all the files in the specified directory
 	// iterate over the directory containing the game files
 	games = make([]jsontypes.Game,0)
-	dirs, err := os.ReadDir(dirname)
-	for _,dir := range dirs {
-		fname := dir.Name()
-		// ignore non-json files
-		if path.Ext(fname) != ".json" {
-			continue
-		}
-		
-		// fs.Direntry Name returns only final element of path
-		fname = dirname + "/" + dir.Name()
-
-		// get the game data from the json file
-		gamelog, err = jsontypes.LoadGamelog(fname)
-		if err != nil {
-			return err
-		}
-
-		// merge it to the total games
-		games = append(games,gamelog...)
+	games, err = jsontypes.ReadGames(dirname)
+	if err != nil {
+		log.Fatal(err)
 	}
-
 
 	// interface slice to contain bson marshalled personnel records
 	dox := make([]interface{},0)
@@ -276,8 +253,8 @@ func LoadGames(dirname string) error {
 
 // DropRetrosheet drop the retrosheet database
 // in prep for repopulation
-func DropRetrosheet() error {
-	uri := "mongodb://localhost:27017"
+func DropRetrosheet(uri string) error {
+	
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
@@ -306,30 +283,32 @@ func DropRetrosheet() error {
 // it requires the file and directory names for the data files
 func PopulateRetrosheet() error {
 	var err error
-	var personnel = os.Getenv("RETROSHEET") + "/personnel.json"
-	var teams = os.Getenv("RETROSHEET") + "/teams.json"
-	var games = os.Getenv("RETROSHEET") + "/games/json/"
+	var fpath = os.Getenv("RETROSHEET_DATA")
+	var personnel = fpath + "/personnel.json"
+	var teams = fpath + "/teams.json"
+	var mongodb_uri = os.Getenv("RETROSHEET_MONGO")
+	var games = fpath + "/games/json/"
 
 	// delete the database
-	err = DropRetrosheet()
+	err = DropRetrosheet(mongodb_uri)
 	if err != nil {
 		return err
 	}
 
 	// load the personnel  data
-	err = LoadPersonnel(personnel)
+	err = LoadPersonnel(mongodb_uri,personnel)
 	if err != nil {
 		return err
 	}
 
 	// load the team data
-	err = LoadTeams(teams)
+	err = LoadTeams(mongodb_uri,teams)
 	if err != nil {
 		return err
 	}
 
 	// load the game data
-	err = LoadGames(games)
+	err = LoadGames(mongodb_uri, games)
 	if err != nil {
 		return err
 	}

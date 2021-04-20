@@ -7,7 +7,7 @@ import (
 
 // TestTeamFile ...
 func TestTeamFile(t *testing.T) {
-	var fname = os.Getenv("RETROSHEET") + "/teams.json"
+	var fname = os.Getenv("RETROSHEET_DATA") + "/teams.json"
     var teams []Team
 
 	teams = make([]Team,0)
@@ -23,7 +23,7 @@ func TestTeamFile(t *testing.T) {
 }
 
 func TestTeamStruct(t *testing.T) {
-	var fname = os.Getenv("RETROSHEET") + "/teams.json"
+	var fname = os.Getenv("RETROSHEET_DATA") + "/teams.json"
     var teams []Team
 
 	teams = make([]Team,0)

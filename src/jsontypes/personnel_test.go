@@ -6,12 +6,12 @@ import (
 )
 
 func TestPersonnel(t *testing.T) {
-	var fname = os.Getenv("RETROSHEET") + "/personnel.json"
+	var fname = os.Getenv("RETROSHEET_DATA") + "/personnel.json"
     var ids []Person
 
 	ids = make([]Person,0)
 
-	ids,err := LoadPersonnel(fname)
+	ids,err := ReadPersonnel(fname)
 
 	if err != nil {
 		t.Error("load failed",err)

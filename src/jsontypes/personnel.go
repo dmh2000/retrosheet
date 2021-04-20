@@ -30,9 +30,9 @@ func GetPersonFields() []string {
 	  }
 }
 
-// LoadPersonnel - reads the retrosheet personnel json file and returns a slice of 
+// ReadPersonnel - reads the retrosheet personnel json file and returns a slice of 
 // Person's
-func LoadPersonnel(fname string) ([]Person, error) {
+func ReadPersonnel(fname string) ([]Person, error) {
 	jsonBlob, err := ioutil.ReadFile(fname)
 	if err != nil {
 		return nil, err

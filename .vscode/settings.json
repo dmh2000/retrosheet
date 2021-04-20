@@ -1,11 +1,14 @@
 {
     "cSpell.ignoreWords": [
         "dirents",
+        "fpath",
         "gamelog",
         "gamelogs",
         "glfields",
         "infile",
+        "mongodb",
         "retroid",
-        "teamabr"
+        "teamabr",
+        "url"
     ]
 }

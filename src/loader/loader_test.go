@@ -18,8 +18,11 @@ type game struct {
 	Vscore int
 }
 
+var test_mongodb_uri = os.Getenv("RETROSHEET_MONGO")
+var test_data_path = os.Getenv("RETROSHEET_DATA")
+
 func TestConnection(t *testing.T) {
-	uri := "mongodb://localhost:27017"
+	uri := test_mongodb_uri
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		t.Error(err)
@@ -61,9 +64,10 @@ func TestConnection(t *testing.T) {
 }
 
 func TestPersonnel(t *testing.T) {
-	var fname = os.Getenv("RETROSHEET") + "/personnel.json"
+	fname := test_data_path + "/personnel.json"
+	uri := test_mongodb_uri
 
-	err := LoadPersonnel(fname)
+	err := LoadPersonnel(uri, fname)
 
 	if err != nil {
 		t.Error(err)
@@ -72,9 +76,10 @@ func TestPersonnel(t *testing.T) {
 
 
 func TestTeams(t *testing.T) {
-	var fname = os.Getenv("RETROSHEET") + "/teams.json"
+	fname := test_data_path + "/teams.json"
+	uri := test_mongodb_uri
 
-	err := LoadTeams(fname)
+	err := LoadTeams(uri,fname)
 
 	if err != nil {
 		t.Error(err)
@@ -83,9 +88,10 @@ func TestTeams(t *testing.T) {
 
 // test loading a single gamelog file into mongodb
 func TestGamelog(t *testing.T) {
-	var fname = os.Getenv("RETROSHEET") + "/games/json/gl2010.json"
+	fname := test_data_path + "/games/json/gl2010.json"
+	uri := test_mongodb_uri
 
-	err := LoadGameLog(fname)
+	err := LoadGameLog(uri, fname)
 
 	if err != nil {
 		t.Error(err)
@@ -94,9 +100,10 @@ func TestGamelog(t *testing.T) {
 
 // test loading ALL gamelogs from a single directory into mongodb
 func TestGames(t *testing.T) {
-	var dirname = os.Getenv("RETROSHEET") + "/games/json/"
+	dirname := test_data_path + "/games/json/"
+	uri := test_mongodb_uri
 
-	err := LoadGames(dirname)
+	err := LoadGames(uri, dirname)
 
 	if err != nil {
 		t.Error(err)

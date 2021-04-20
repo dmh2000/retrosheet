@@ -172,9 +172,9 @@ type Game struct {
 	AcquisitionInfo          string `json:"AcquisitionInfo,omitempty"`
 }
 
-// LoadGamelog - loads the games from a single gamelog file
+// ReadGamelog - loads the games from a single gamelog file
 // It returns a slice containing the game data from the specified file (fname)
-func LoadGamelog(fname string) ([]Game, error) {
+func ReadGamelog(fname string) ([]Game, error) {
 	jsonBlob, err := ioutil.ReadFile(fname)
 	if err != nil {
 		return nil, err
@@ -192,10 +192,10 @@ func LoadGamelog(fname string) ([]Game, error) {
 	return games, nil
 }
 
-// LoadGames loads all gamelogs in a single directory
+// ReadGames loads all gamelogs in a single directory
 // files must have extent '.json'
 // other files are skipped
-func LoadGames(dirname string) ([]Game, error) {
+func ReadGames(dirname string) ([]Game, error) {
 	var games []Game
 	var gamelog []Game
 
@@ -214,7 +214,7 @@ func LoadGames(dirname string) ([]Game, error) {
 		fname := dirname + "/" + ent.Name()
 
 		// get the game data from the json file
-		gamelog, err = LoadGamelog(fname)
+		gamelog, err = ReadGamelog(fname)
 		if err != nil {
 			return nil, err
 		}

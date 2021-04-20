@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var fpath string = os.Getenv("RETROSHEET") + "/gamelogs/json" 
+var fpath string = os.Getenv("RETROSHEET_DATA") + "/gamelogs/json" 
 // TestGameFile ...
 func TestGameFile(t *testing.T) {
 	var fname = fpath + "/gl2013.json"
@@ -14,7 +14,7 @@ func TestGameFile(t *testing.T) {
 
 	games = make([]Game,0)
 
-	games,err := LoadGamelog(fname)
+	games,err := ReadGamelog(fname)
 	if err != nil {
 		t.Error("load failed",err)
 	}
@@ -28,7 +28,7 @@ func TestGameDir(t *testing.T) {
 	var dirname = fpath
     var games []Game
 
-	games,err := LoadGames(dirname)
+	games,err := ReadGames(dirname)
 	if err != nil {
 		t.Error("load failed",err)
 	}
@@ -49,7 +49,7 @@ func TestGameStruct(t *testing.T) {
 
 	games = make([]Game,0)
 
-	games,err := LoadGamelog(fname)
+	games,err := ReadGamelog(fname)
 
 	// print number of games
 	fmt.Printf("number of games %v\n",len(games))
