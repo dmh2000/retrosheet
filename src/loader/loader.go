@@ -3,8 +3,6 @@ package loader
 import (
 	"context"
 	"errors"
-	"log"
-	"os"
 
 	"github.com/dmh2000/retrosheet/src/jsontypes"
 	"go.mongodb.org/mongo-driver/bson"
@@ -18,14 +16,14 @@ import (
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	// read the personnel json data
@@ -47,6 +45,12 @@ import (
 		// append to array of documents
 		dox = append(dox,b)
 	}
+
+	if len(dox) == 0 {
+		// no personnel data
+		return errors.New("No personnel data found, check path name")
+	}
+
 
 	// get the personnel collection
 	coll := client.Database("retrosheet").Collection("personnel")
@@ -75,14 +79,14 @@ import (
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
-		log.Fatal(err)
+		return err 
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	// read the team json data
@@ -103,6 +107,11 @@ import (
 		}
 		// append to array of documents
 		dox = append(dox,b)
+	}
+
+	if len(dox) == 0 {
+		// no team data
+		return errors.New("No team data found, check path name")
 	}
 
 	// get the personnel collection
@@ -134,14 +143,14 @@ func LoadGameLog(uri string, fname string) error {
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
     // get the game data from the json file
@@ -162,6 +171,11 @@ func LoadGameLog(uri string, fname string) error {
 		}
 		// append to array of documents
 		dox = append(dox,b)
+	}
+
+	if len(dox) == 0 {
+		// no game data
+		return errors.New("No game data found, check pathname")
 	}
 
 	// get the personnel collection
@@ -197,14 +211,14 @@ func LoadGames(uri, dirname string) error {
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	// create a slice of ALL games
@@ -213,7 +227,7 @@ func LoadGames(uri, dirname string) error {
 	games = make([]jsontypes.Game,0)
 	games, err = jsontypes.ReadGames(dirname)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	// interface slice to contain bson marshalled personnel records
@@ -228,6 +242,10 @@ func LoadGames(uri, dirname string) error {
 		}
 		// append to array of documents
 		dox = append(dox,b)
+	}
+	if len(dox) == 0 {
+		// no game data
+		return errors.New("no game data found, check pathname")
 	}
 
 	// get the personnel collection
@@ -257,14 +275,14 @@ func DropRetrosheet(uri string) error {
 	
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err = client.Connect(ctx)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	// drop retrosheet
@@ -281,13 +299,11 @@ func DropRetrosheet(uri string) error {
 // PopulateRetrosheet is used to repopulate the complete retrosheet database
 // it drops the existing db and reloads personnel, teams and games
 // it requires the file and directory names for the data files
-func PopulateRetrosheet() error {
+func PopulateRetrosheet(dirname string, mongodb_uri string) error {
 	var err error
-	var fpath = os.Getenv("RETROSHEET_DATA")
-	var personnel = fpath + "/personnel.json"
-	var teams = fpath + "/teams.json"
-	var mongodb_uri = os.Getenv("RETROSHEET_MONGO")
-	var games = fpath + "/games/json/"
+	var personnel = dirname + "/personnel.json"
+	var teams = dirname + "/teams.json"
+	var games = dirname + "/gamelogs/json/"
 
 	// delete the database
 	err = DropRetrosheet(mongodb_uri)

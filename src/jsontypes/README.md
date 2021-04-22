@@ -1,5 +1,7 @@
 # Support for Converted Retrosheet JSON Files
 
+see [Chapter 3 - Read JSON](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-3/index.md)
+
 ## Retrosheet Types
 
 Type definitions for the various

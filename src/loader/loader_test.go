@@ -111,7 +111,7 @@ func TestGames(t *testing.T) {
 }
 
 func TestPopulate(t *testing.T) {
-	err := PopulateRetrosheet()
+	err := PopulateRetrosheet(test_data_path,test_mongodb_uri)
 	if err != nil {
 		t.Error(err)
 	}

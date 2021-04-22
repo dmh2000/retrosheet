@@ -26,6 +26,8 @@ What I ended up wanting to do is use one of these sources that let me host the d
 
 One of the sources mentioned at [sabr.org](https://sabr.org/how-to/statistical-databases-and-websites) that fit the bill is (retrosheet.org)[https://www.retrosheet.org/]. It has some pretty comprehensive data about games, personnel and teams. Best of all their data is free to download and use with the proper attribution. So I started this project using their data as the basis. Just to be clear, I am not affiliated with retrosheet.org, I am just using their data and putting a wrapper around it.
 
+Retrosheet is put together by volunteers and its a lot of work. You may find that some of the data is incomplete. I'm sure they would welcome any help updating the data.
+
 I suggest you peruse (retrosheet.org)[https://www.retrosheet.org/] to get a feel for what it provides. The folks there put a lot of work into making this data available. I thank them for that!
 
 <pre>
