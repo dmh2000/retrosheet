@@ -33,7 +33,7 @@ jsontypes
 
 ### Gamelogs
 
-Each gamelog in data/games/json/glXXXX.json contains multiple games. Typically a season but could also be playoffs, depending on the files used.
+Each gamelog in data/gamelogs/json/glXXXX.json contains multiple games. Typically a season but could also be playoffs, depending on the files used.
 
 #### game.go
 

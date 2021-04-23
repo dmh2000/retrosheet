@@ -200,7 +200,7 @@ func LoadGameLog(uri string, fname string) error {
 	return nil
  }
 
-// LoadGames loads ALL gamelog files from the specifried directory
+// LoadGames loads ALL gamelog files from the specified directory
 // gamelog files are organized by year
 // there are many gamelog files each containing multiple games
 // Note : as of the date of this file, there are over 200,000 
@@ -331,3 +331,4 @@ func PopulateRetrosheet(dirname string, mongodb_uri string) error {
 
 	return nil
 }
+

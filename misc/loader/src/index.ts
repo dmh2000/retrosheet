@@ -52,7 +52,7 @@ function load(
 const url = "mongodb://192.168.5.3:27017";
 // const url = "mongodb://localhost:27017";
 const dbname = "baseball";
-const data = "../../data/games/json";
+const data = "../../data/gamelogs/json";
 const fname = "gl2010.json";
 
 const datapath = path.join(data, fname);

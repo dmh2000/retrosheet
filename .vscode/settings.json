@@ -5,12 +5,14 @@
         "gamelog",
         "gamelogs",
         "glfields",
+        "hscore",
         "infile",
         "mets",
         "mongodb",
         "retroid",
         "stlouis",
         "teamabr",
-        "url"
+        "url",
+        "vscore"
     ]
 }

@@ -88,7 +88,7 @@ func TestTeams(t *testing.T) {
 
 // test loading a single gamelog file into mongodb
 func TestGamelog(t *testing.T) {
-	fname := test_data_path + "/games/json/gl2010.json"
+	fname := test_data_path + "/gamelogs/json/gl2010.json"
 	uri := test_mongodb_uri
 
 	err := LoadGameLog(uri, fname)
@@ -100,7 +100,7 @@ func TestGamelog(t *testing.T) {
 
 // test loading ALL gamelogs from a single directory into mongodb
 func TestGames(t *testing.T) {
-	dirname := test_data_path + "/games/json/"
+	dirname := test_data_path + "/gamelogs/json/"
 	uri := test_mongodb_uri
 
 	err := LoadGames(uri, dirname)
