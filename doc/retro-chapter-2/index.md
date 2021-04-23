@@ -11,6 +11,10 @@ The code for this step is in the repo at retrosheet/src/csv-transform. Yes I kno
 You will need to install node.js version 10 or later for this step.
 This is the directory layout for retrosheet/csv-transform after the 'npm install's have been done. (see below)
 
+## Code
+
+[Code is here](https://github.com/dmh2000/go_baseball_with_retrosheet/tree/main/src/csv-transform)
+
 <pre>
 csv-transform
 ├── csv-transform-games
@@ -38,8 +42,6 @@ csv-transform
 ├── install.sh
 └── transform.sh
 </pre>
-
-## Code
 
 There code in each of the three directories is pretty simple. Each program reads the appropriate input .csv file, uses the node.js package 'csv-parse' to read the csv lines into JavaScript Objects, which are then converted to JSON using JSON.stringify. Then concatenated into a single JSON file and written out to the destination directory.
 

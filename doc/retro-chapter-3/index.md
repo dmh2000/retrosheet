@@ -13,11 +13,29 @@ The general method used in each of Games, Teams and Personnel is to read the jso
 - json:_name_ provides a mapping from the field names in the json file to the names in the Go struct. In this case I tried to keep the names the same but for consistency it is helpful to have this annotation.
 - json:'omitempty' is especially important because the raw data has some missing items and this annotation will populate the affected field with the default value for the type.
 
-## Gamelogs
+## Code
+
+[Code is here](https://github.com/dmh2000/go_baseball_with_retrosheet/tree/main/src/jsontypes)
+
+The _jsontypes_ directory (under _src_) contains the code and tests for each of the three types of data
+
+<pre>
+jsontypes
+│   ├── game.go            // functions to load game logs
+│   ├── game_test.go       // test game.go
+│   ├── personnel.go       // functions to load personnel data
+│   ├── personnel_test.go  // test personnel.go
+│   ├── team.go            // functions to load team data
+│   ├── team_test.go       // test team.go
+│   ├── test.sh            // shell command to run the tests
+│   └── README.md        
+</pre>
+
+### Gamelogs
 
 Each gamelog in data/games/json/glXXXX.json contains multiple games. Typically a season but could also be playoffs, depending on the files used.
 
-### game.go
+#### game.go
 
 ```go
 // the type definition for the data associated with a single game
@@ -34,11 +52,11 @@ func ReadGamelog(fname string) ([]Game, error)
 func ReadGames(dirname string) ([]Game, error)
 ```
 
-## Personnel
+### Personnel
 
 There is a single json file containing data for all the personnel that participated in MLB baseball. This includes players, managers and umpires. The
 
-### personnel.go
+#### personnel.go
 
 ```go
 // the type definition of a Person object in the MLB context
@@ -49,11 +67,11 @@ type Person struct
 func ReadPersonnel(fname string) ([]Person, error)
 ```
 
-## Teams
+### Teams
 
 There is a single json file containing data for all the teams that participated in MLB baseball.
 
-### teams.go
+#### teams.go
 
 ```go
 // the type definition of a Team object
@@ -63,19 +81,3 @@ type Team struct
 // returns a slice of Team data or an error
 func ReadTeams(fname string) ([]Team, error)
 ```
-
-## Directory Structure
-
-The _jsontypes_ directory (under _src_) contains the code and tests for each of the three types of data
-
-<pre>
-jsontypes
-│   ├── game.go            // functions to load game logs
-│   ├── game_test.go       // test game.go
-│   ├── personnel.go       // functions to load personnel data
-│   ├── personnel_test.go  // test personnel.go
-│   ├── team.go            // functions to load team data
-│   ├── team_test.go       // test team.go
-│   ├── test.sh            // shell command to run the tests
-│   └── README.md        
-</pre>

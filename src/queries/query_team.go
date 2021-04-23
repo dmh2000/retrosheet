@@ -10,7 +10,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func getTeamByKey(uri string, key string, value string) ([]jsontypes.Team, error) {
+// GetTeamByKey full inline
+// this version gets records from the retrosheet:teams database:collection
+// based on a single key:value filter. This implementation performs all the
+// execution inline with no abstraction of the database access
+func GetTeamByKey(uri string, key string, value string) ([]jsontypes.Team, error) {
 	var err error
 	var client *mongo.Client
 	
@@ -61,3 +65,56 @@ func getTeamByKey(uri string, key string, value string) ([]jsontypes.Team, error
 	return teams, nil
 }
 
+// =================================================================
+// The following version uses the refactored database query 
+// handler QueryDb (in query_util.go)
+// this hander requires an instance of the Decoder interface
+// and an instance of QueryParams
+
+// TeamQuery : a struct that gets the results of a query
+type TeamQuery struct {
+	teams []jsontypes.Team
+}
+
+// decode implementation of the interface query_util:Query
+// given a cursor and a context, this function extracts the 
+// team data into the instance of TeamQuery
+func (t *TeamQuery) decode(cursor *mongo.Cursor,ctx *context.Context) error {
+	var err error
+	// decode all matching records
+	for cursor.Next(*ctx) {
+		var team jsontypes.Team
+
+		// decode into a team
+		err = cursor.Decode(&team)
+		if err != nil {
+			return err
+		}
+
+		// add to list
+		t.teams = append(t.teams,team)
+	}
+	return nil
+}
+	
+// QueryTeam performs the same query as GetTeamByKey above,
+// however it uses the 'queryDB' function that handles the database 
+// connection and access. The only things this function needs to provide
+// are the database parameters and an object that 
+// implements the query_util:Query interface
+func QueryTeam(uri string, database string,filter interface{}) ([]jsontypes.Team,error) {
+	var tq TeamQuery
+	var err error
+	var params QueryParams = QueryParams{
+		uri : uri,
+		database: database,
+		collection: "teams",
+		filter: filter,
+	}
+	err = QueryDb(params,&tq)
+	if err != nil {
+		return nil,err
+	}
+
+	return tq.teams,nil
+}
