@@ -6,12 +6,14 @@ slug: "/retro-chapter-4"
 
 # Chapter 4 - Populating the Database (loader)
 
-This step populates a Mongdb database with the games, teams and personnel data. It uses the jsontypes library to access the local data and upload it using the Golang mongodb API.
+This step populates a Mongodb database with the games, teams and personnel data. It uses the jsontypes library to access the local data and upload it using the Golang mongodb API.
 
 For this step you need to have an active mongodb instance with access permissions to create and access a database.
 It could be local or remote (such as Mongodb Atlas Cloud). Mongodb Atlas is a good choice for quick setup without having to install mongodb locally. It has a free tier that is fine for this application. However, because access is over the network, some of the data uploads will take a lot longer than if you have a local instance.
 
 You can find how to use either approach at [Mongodb.com](mongodb.com).
+
+Note: the Mongodb Atlas free tier has a 512MB limit and depending on which set of games you load it may overflow that limit. When the limit is reached it just stops saving the additional games. If you use the recommended data and scripts in this repo it may overflow so you only get most of the games but the later dates will not be stored. One way to fix this is to remove gamelog json files in the raw data that are in years you aren't concerned with, and repopulate the database. If you have a local instance of mongodb you probably won't encounter this issue.
 
 ## env.sh
 

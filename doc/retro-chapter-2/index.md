@@ -9,7 +9,7 @@ slug: "/retro-chapter-2"
 The code for this step is in the repo at retrosheet/src/csv-transform. Yes I know I said this was about Go but in this case node/JavaScript was a bit simpler to get working right. I promise the rest of the work is in Go.
 
 You will need to install node.js version 10 or later for this step.
-This is the directory layout for retrosheet/csv-transform after the 'npm install's have been done. (see below)
+This is the directory layout for retrosheet/csv-transform after the 'npm install' are been done. (see below)
 
 ## Data Location
 

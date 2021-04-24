@@ -14,7 +14,7 @@ export RETROSHEET="${HOME}/projects/baseball/retrosheet"
 # local
 export RETROSHEET_MONGO="mongodb://localhost:27017"
 # example for mongodb atlas
-# export RETROSHEET_MONGO="mongodb+srv://<username>:<password>@cluster0.<cluster id>.mongodb.net/<database name>?retryWrites=true&w=majority"
+export RETROSHEET_MONGO="mongodb+srv://<username>:<password>@cluster0.<cluster id>.mongodb.net/<database name>?retryWrites=true&w=majority"
 
 # based path to retrosheet data files
 export RETROSHEET_DATA="${HOME}/projects/baseball/data"
