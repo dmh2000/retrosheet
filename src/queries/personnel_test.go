@@ -30,7 +30,7 @@ import (
 // finds all teams with LastYear == 2010 that are in the national league
 func TestPersonLastName1(t *testing.T) {
 	teams, err := QueryPersonnel(
-					"mongodb://localhost:27017",
+					getMongodbUri(),
 					"retrosheet",	
 					bson.D{{ Key:"last",Value:"Schmidt"}},
 					nil)
@@ -47,7 +47,7 @@ func TestPersonLastName1(t *testing.T) {
 // query for all personnel with last name Schmid but only return first and last name
 func TestPersonLastName2(t *testing.T) {
 	teams, err := QueryPersonnel(
-					"mongodb://localhost:27017",
+					getMongodbUri(),
 					"retrosheet",	
 					bson.D{{ Key:"last",Value:"Schmidt"}},
 					bson.D{{Key:"last",Value:1},{Key:"first",Value:1}})

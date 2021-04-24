@@ -8,6 +8,10 @@ slug: "/retro-chapter-1"
 
 ## Introduction
 
+### Runtime Environment
+
+The code and scripts in this article were all developed and run on Linux. The Node.js/JavaScript and Go code will run on windows without change. However any shell scripts would have to be modified for Windows cmd.exe of Powershell.
+
 Have you ever wondered what let sportscasters pull up stats
 on all sorts of things during a game? Did you ever want
 to have something like that for free? And do you prefer

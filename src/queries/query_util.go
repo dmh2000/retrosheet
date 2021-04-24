@@ -3,10 +3,19 @@ package query
 import (
 	"context"
 	"errors"
+	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
+
+func getMongodbUri() string {
+	return os.Getenv("RETROSHEET_MONGO")
+}
+
+func getJsonDataPath() string {
+	return os.Getenv("RETROSHEET_DATA")
+}
 
 type QueryParams struct {
 	uri string				// mongdb server uri

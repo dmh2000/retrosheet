@@ -38,21 +38,3 @@ function load(url, dbname, collectionName, documents) {
       })
   );
 }
-
-/*
-// ========================================
-// TEST
-// ========================================
-const url = 'mongodb://192.168.5.3:27017';
-const dbname = 'baseball';
-
-const gameJson = fs.readFileSync(__dirname + '/gl2010.json', { encoding: 'UTF-8' });
-const games = JSON.parse(gameJson);
-console.log(games.length);
-
-load(url, dbname, 'games', games)
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((error) => console.log(error));
-*/

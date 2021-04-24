@@ -6,7 +6,10 @@ import (
 	"log"
 	"os"
 
+	"github.com/dmh2000/retrosheet/src/jsontypes"
 	"github.com/dmh2000/retrosheet/src/loader"
+	"github.com/dmh2000/retrosheet/src/query"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 type options struct {
@@ -92,5 +95,14 @@ func main() {
 
 	if opt.query {
 		fmt.Println("Running Queries")
+		var teams []jsontypes.Team
+		teams, err = query.QueryTeam(
+			query.getMongodbUri(),
+			"retrosheet",	
+			bson.D{{ Key:"lastyear",Value:"2010"}, { Key:"league",Value:"NL"}})
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(teams)
 	}
 }

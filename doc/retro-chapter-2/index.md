@@ -11,6 +11,36 @@ The code for this step is in the repo at retrosheet/src/csv-transform. Yes I kno
 You will need to install node.js version 10 or later for this step.
 This is the directory layout for retrosheet/csv-transform after the 'npm install's have been done. (see below)
 
+## Data Location
+
+For convenience and portability the code access the csv and json data using an environment variable.
+The file _env.sh_ exports the appropriate strings. You will need to configure it for your system.
+
+```bash
+# env.sh
+# source this file to update settings
+
+# WARNING
+# treat this file as a template
+# do not add it to version control if it contains any
+# private information such as usernames, passwords, addresses or other authentication data
+
+# set the required environment variables
+
+# base path of RETROSHEET project code
+export RETROSHEET="${HOME}/projects/baseball/retrosheet"
+
+# url to mongodb server
+# default local instance
+export RETROSHEET_MONGO="mongodb://localhost:27017"
+
+# example for mongodb atlas
+# export RETROSHEET_MONGO="mongodb+srv://<username>:<password>@cluster0.<cluster id>.mongodb.net/<database name>?retryWrites=true&w=majority"
+
+# based path to retrosheet data files
+export RETROSHEET_DATA="${HOME}/projects/baseball/data"
+```
+
 ## Code
 
 [Code is here](https://github.com/dmh2000/go_baseball_with_retrosheet/tree/main/src/csv-transform)
@@ -81,3 +111,7 @@ If you used the directory layout from chapter 1 then you can execute the followi
 - npm install
 - node index.js [path to data/retroid.csv] >[path to data/retroid.json]
 - "$ node index.js ~/projects/baseball/data/retroid.csv >~/projects/baseball/data/personnel.json"
+
+## Runtime Environment
+
+The code and scripts in this article were all developed and run on Linux. The Node.js/JavaScript and Go code will run on windows without change. However any shell scripts would have to be modified for Windows cmd.exe of Powershell.

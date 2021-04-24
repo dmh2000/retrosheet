@@ -15,7 +15,7 @@ import (
 // TestTeamByAbbr
 // this version uses the full inline function GetTeamByKey
 func TestTeamByAbbr(t *testing.T) {
-	teams,err := GetTeamByKey("mongodb://localhost:27017","abbr","ATL")
+	teams,err := GetTeamByKey(getMongodbUri(),"abbr","ATL")
 	if err != nil {
 		t.Error(err)
 	}
@@ -56,7 +56,7 @@ var stlouis []jsontypes.Team = []jsontypes.Team {
 //      query_team.go : QueryTeam
 func TestTeamByCity1(t *testing.T) {
 	teams, err := QueryTeam(
-					"mongodb://localhost:27017",
+					getMongodbUri(),
 					"retrosheet",	
 					bson.D{{ Key:"city",Value:"St. Louis"}})
 	if err != nil {
@@ -73,7 +73,7 @@ func TestTeamByCity1(t *testing.T) {
 
 // TestTeamByCity2 uses the full inline version to query the database
 func TestTeamByCity2(t *testing.T) {
-	teams,err := GetTeamByKey("mongodb://localhost:27017","city", "St. Louis")
+	teams,err := GetTeamByKey(getMongodbUri(),"city", "St. Louis")
 	if err != nil {
 		t.Error(err)
 	}
@@ -93,7 +93,7 @@ func TestTeamByCity2(t *testing.T) {
 }
 
 func TestTeamByLastYear(t *testing.T) {
-	teams,err := GetTeamByKey("mongodb://localhost:27017","lastyear", "2010")
+	teams,err := GetTeamByKey(getMongodbUri(),"lastyear", "2010")
 	if err != nil {
 		t.Error(err)
 	}
@@ -136,7 +136,7 @@ var year_league []jsontypes.Team = []jsontypes.Team {
 // finds all teams with LastYear == 2010 that are in the national league
 func TestTeamYearLeague(t *testing.T) {
 	teams, err := QueryTeam(
-					"mongodb://localhost:27017",
+					getMongodbUri(),
 					"retrosheet",	
 					bson.D{{ Key:"lastyear",Value:"2010"}, { Key:"league",Value:"NL"}})
 	if err != nil {

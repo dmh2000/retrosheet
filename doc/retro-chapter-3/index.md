@@ -4,14 +4,44 @@ date: 2020-05-18
 slug: "/retro-chapter-3"
 ---
 
-# Chapter 3 - Reading the JSON Data
+# Chapter 3 - Reading the JSON Data (jsontypes)
 
-A library for reading the json data files into Go objects.
+A library named "jsontypes" for reading the json data files into Go objects.
 
 The general method used in each of Games, Teams and Personnel is to read the json files created in chapter 2 and use json.Unmarshal them into arrays of Go structs. In addition the code for each type contains the relevant struct definition and the associated json annotations. The annotations do two things:
 
 - json:_name_ provides a mapping from the field names in the json file to the names in the Go struct. In this case I tried to keep the names the same but for consistency it is helpful to have this annotation.
 - json:'omitempty' is especially important because the raw data has some missing items and this annotation will populate the affected field with the default value for the type.
+
+## Data Location
+
+For convenience and portability the code access the csv and json data using an environment variable.
+The file _env.sh_ exports the appropriate strings. You will need to configure it for your system.
+
+```bash
+# env.sh
+# source this file to update settings
+
+# WARNING
+# treat this file as a template
+# do not add it to version control if it contains any
+# private information such as usernames, passwords, addresses or other authentication data
+
+# set the required environment variables
+
+# base path of RETROSHEET project code
+export RETROSHEET="${HOME}/projects/baseball/retrosheet"
+
+# url to mongodb server
+# default local instance
+export RETROSHEET_MONGO="mongodb://localhost:27017"
+
+# example for mongodb atlas
+# export RETROSHEET_MONGO="mongodb+srv://<username>:<password>@cluster0.<cluster id>.mongodb.net/<database name>?retryWrites=true&w=majority"
+
+# based path to retrosheet data files
+export RETROSHEET_DATA="${HOME}/projects/baseball/data"
+```
 
 ## Code
 
@@ -81,3 +111,7 @@ type Team struct
 // returns a slice of Team data or an error
 func ReadTeams(fname string) ([]Team, error)
 ```
+
+## Runtime Environment
+
+The code and scripts in this article were all developed and run on Linux. The Node.js/JavaScript and Go code will run on windows without change. However any shell scripts would have to be modified for Windows cmd.exe of Powershell.
