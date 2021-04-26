@@ -27,7 +27,11 @@ Usage docs are in ./doc
 
 5. [Chapter 5 - Simple Queries](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-5/index.md)
 
-- A Go package that provides some simple queries to the Mongodb database.
+- A Go package that provides some simple test queries to the Mongodb database.
+
+6. [Chapter 6 - API Microservice](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-6/index.md)
+
+- A microservice for making queries (dockerized)
 
 ## RETROSHEET
 

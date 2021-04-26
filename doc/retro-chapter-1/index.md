@@ -4,6 +4,15 @@ date: 2020-05-18
 slug: "/retro-chapter-1"
 ---
 
+# Table of Contents
+
+- [Chapter 1 - Overview](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-1/index.md)
+- [Chapter 2 - Transform CSV](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-2/index.md)
+- [Chapter 3 - Read JSON](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-3/index.md)
+- [Chapter 4 - Upload to Mongodb](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-4/index.md)
+- [Chapter 5 - Simple Queries](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-5/index.md)
+- [Chapter 6 - API Microservice](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-6/index.md)
+
 # So You Like Go and Baseball
 
 ## Introduction
@@ -48,7 +57,7 @@ have a database of play-by-play data for pro teams from 1920 to 2020. To keep it
 Here's the files you should download if you want to follow along.
 
 - [Game Logs](https://www.retrosheet.org/gamelogs/index.html)
-  - The gamelogs include scores, player info and other stuff. They are organized by season and can be downloaded piecemeal. I downloaded (the whole thing)[https://www.retrosheet.org/gamelogs/gl1871_2020.zip] but my code doesn't require all the years if you don't need them. Just download the ones you prefer.
+  - The gamelogs include scores, player info and other stuff. They are organized by season and can be downloaded piecemeal. I downloaded (the whole thing)[https://www.retrosheet.org/gamelogs/gl1871_2020.zip] but my code doesn't require all the years if you don't need them. Just download the ones you prefer. In a later chapter there is an option to upload the gamelog data to Mongodb Cloud. The free tier of Mongodb has a 512MB limit and this gamelog set exceeds that limit, so you would have to delete about 2/3 of the csv data before proceeding.
   - Each gamelog is a csv file with a row for each game. A [description of the columns is here](https://www.retrosheet.org/gamelogs/glfields.txt). There is a gamelog file for each year.
 - [Team Data](https://www.retrosheet.org/TeamIDs.htm)
   - This data has just a few fields but is useful for queries because you can use it as keys for finding data in the game logs. There is only one file .

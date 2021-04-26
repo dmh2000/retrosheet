@@ -1,5 +1,5 @@
 ---
-title: "So You Like Go and Baseball - Chapter 5"
+title: "So You Like Go and Baseball - Chapter 6"
 date: 2020-05-18
 slug: "/retro-chapter-5"
 ---
@@ -13,12 +13,4 @@ slug: "/retro-chapter-5"
 - [Chapter 5 - Simple Queries](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-5/index.md)
 - [Chapter 6 - API Microservice](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-6/index.md)
 
-# Chapter 5 - Simple Queries
-
-full inline vs refactored QueryDb
-
-- select language to Go
-
-[Mongodb Query Array with Filter](https://docs.mongodb.com/manual/tutorial/query-arrays/)
-
-[Mongodb Query Array with Projection](https://docs.mongodb.com/manual/tutorial/project-fields-from-query-results/)
+# Chapter 6 - API Microservice

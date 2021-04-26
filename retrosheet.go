@@ -116,7 +116,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(teams)
+		for _,v := range teams {
+			fmt.Println(v.Abbr,v.City,v.Nickname)
+		}
 
 
 		// ================================
@@ -131,7 +133,10 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(people)
+		for _,v := range people {
+			fmt.Println(v.ID, v.First,v.Last)
+		}
+
 
 		// ================================
 		// sample Games query
@@ -145,7 +150,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(games)		
+		for _,v := range games {
+			fmt.Println(v.Date,v.HomeTeam,v.VisitorTeam)
+		}
 
 	}
 }

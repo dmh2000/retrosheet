@@ -4,7 +4,19 @@
 set -e 
 
 # Set environment variables
-source ./env.sh
+echo Be sure the RETROSHEET environment variables are set correctly
+echo $RETROSHEET_DATA
+echo $RETROSHEET_MONGO
+# source ./env.sh
+
+# ================================
+# delete existing processed data
+# ================================
+pushd $RETROSHEET_DATA 
+rm *.json
+rm gamelogs/json/*.json
+popd
+
 
 pushd src/csv-transform
 # ================================
@@ -19,28 +31,24 @@ echo TRANFORMING CSV FILES
 ./transform.sh
 popd
 
-pushd src/jsontypes
 # ================================
 # test jsontype library
 # ================================
+pushd src/jsontypes
 echo TESTING 
 go test -v .
 popd
 
-pushd src/loader
 # ================================
-# test loader
+# populate the database
 # ================================
-# populates the database
-# ================================
-echo TESTING LOADER + populating mongdb retrosheet databse
-go test -v .
-popd
+echo Populating mongdb retrosheet databse
+echo use "./retrosheet -p to populate the database"
+# ./retrosheet -p
 
-pushd src/queries
 # ================================
 # test sample queries
 # ================================
 echo TESTING QUERIES
-go test -v .
-popd
+echo use "./retrosheet -q to test the queries"
+# ./retrosheet -q
