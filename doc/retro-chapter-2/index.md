@@ -12,8 +12,7 @@ slug: "/retro-chapter-2"
 - [Chapter 4 - Populate the Database](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-4/index.md)
 - [Chapter 5 - Simple Queries](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-5/index.md)
 - [Chapter 6 - API Microservice](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-6/index.md)
-  Chapter 6 - API Microservice](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-6/index.md)
-
+  
 # Chapter 2 - CSV Transform to JSON
 
 The code for this step is in the repo at retrosheet/src/csv-transform. Yes I know I said this was about Go but in this case node/JavaScript was a bit simpler to get working right. I promise the rest of the work is in Go.
