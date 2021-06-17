@@ -13,12 +13,12 @@ func GetMongodbUri() string {
 	return os.Getenv("RETROSHEET_MONGO")
 }
 
-func getJsonDataPath() string {
-	return os.Getenv("RETROSHEET_DATA")
-}
+// func getJsonDataPath() string {
+// 	return os.Getenv("RETROSHEET_DATA")
+// }
 
 type QueryParams struct {
-	uri string				// mongdb server uri
+	uri string				// mongodb server uri
 	database string			// selected database
 	collection string		// selected collection
 	filter interface{}		// bson.D filter
@@ -57,6 +57,9 @@ func QueryDb(qp QueryParams,q Decoder) error {
 		opts = options.Find().SetProjection(qp.projection)
 	}
 	cursor, err  = coll.Find(ctx, qp.filter,opts)
+	if err != nil {
+		return err
+	}
 	defer cursor.Close(ctx)
 
 	// Find failed

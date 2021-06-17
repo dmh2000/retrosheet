@@ -36,6 +36,10 @@ func GetTeamByKey(uri string, key string, value string) ([]jsontypes.Team, error
 
 	// find documents that have the key "abbr" with the specified value
 	cursor, err  := coll.Find(ctx, bson.D{{Key:key, Value:value}} )
+	if err != nil {
+		return nil,err
+	}
+	
 	defer cursor.Close(ctx)
 
 	// insertion failed

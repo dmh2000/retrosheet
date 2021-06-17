@@ -29,9 +29,7 @@ func TestTeamByAbbr(t *testing.T) {
 
 	// should only be 1 entry
 	var v jsontypes.Team = teams[0]
-	var u jsontypes.Team
-
-	u = jsontypes.Team{Abbr:"ATL",League:"NL",City:"Atlanta",Nickname:"Braves",  FirstYear:"1966",LastYear:"2010"}		
+	var u jsontypes.Team = jsontypes.Team{Abbr:"ATL",League:"NL",City:"Atlanta",Nickname:"Braves",  FirstYear:"1966",LastYear:"2010"}		
 
 	if v != u {
 		t.Error("record mismatch",v,u)
