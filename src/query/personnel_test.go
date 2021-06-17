@@ -25,7 +25,7 @@ import (
 // {ID:"schmw101",Last:"Schmidt", First:"Willard 	04/19/1952   }
 // {ID:"schmw102",Last:"Schmidt", First:"Walter 	04/13/1916   }
 // }ID:"
-// Test",Last:"eamYear", First:"eague uses the abstracted version of QueryTeam
+// Test",Last:"TeamYear", First:"League uses the abstracted version of QueryTeam
 // this version uses a filter with 2 key/value pairs
 // finds all teams with LastYear == 2010 that are in the national league
 func TestPersonLastName1(t *testing.T) {
