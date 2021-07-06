@@ -13,8 +13,8 @@ echo $RETROSHEET_MONGO
 # delete existing processed data
 # ================================
 pushd $RETROSHEET_DATA 
-rm *.json
-rm gamelogs/json/*.json
+rm -fv *.json
+rm -fv gamelogs/json/*.json
 popd
 
 
