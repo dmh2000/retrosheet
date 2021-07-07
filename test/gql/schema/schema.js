@@ -1,55 +1,21 @@
-const { default: axios } = require("axios");
 const {
+  GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
-  GraphQLSchema,
+  GraphQLNonNull,
 } = require("graphql");
-
 const {
-  resolveUserCompany,
   resolveUser,
   resolveCompany,
+  resolveAddUser,
+  resolveDeleteUser,
+  resolveModifyUser,
 } = require("./resolvers");
 
-const CompanyType = new GraphQLObjectType({
-  name: "Company",
-  fields: {
-    id: {
-      type: GraphQLString,
-    },
-    name: {
-      type: GraphQLString,
-    },
-    description: {
-      type: GraphQLString,
-    },
-  },
-});
+const { UserType, CompanyType } = require("./types");
 
-const UserType = new GraphQLObjectType({
-  name: "User",
-  fields: {
-    id: {
-      type: GraphQLString,
-    },
-    name: {
-      type: GraphQLString,
-    },
-    age: {
-      type: GraphQLInt,
-    },
-    company: {
-      type: CompanyType,
-      args: { companyId: { type: GraphQLString } },
-      resolve: (parentValue, args) => {
-        return resolveCompany(undefined, { id: parentValue.companyId });
-      },
-    },
-  },
-});
-
-const RootQuery = new GraphQLObjectType({
+const Query = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     user: {
@@ -65,8 +31,40 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+const Mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        age: { type: GraphQLNonNull(GraphQLInt) },
+        companyId: { type: GraphQLString },
+      },
+      resolve: resolveAddUser,
+    },
+    deleteUser: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve: resolveDeleteUser,
+    },
+    modifyUser: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLString) },
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt },
+      },
+      resolve: resolveModifyUser,
+    },
+  },
+});
+
 const schema = new GraphQLSchema({
-  query: RootQuery,
+  query: Query,
+  mutation: Mutation,
 });
 
 module.exports = schema;

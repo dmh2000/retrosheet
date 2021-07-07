@@ -1,28 +1,40 @@
 {
-    "user": [
-        {
-            "id": "1",
-            "name": "dave",
-            "age": 20,
-            "companyId": 1
-        },
-        {
-            "id": "2",
-            "name": "kelli",
-            "age": 15,
-            "companyId": 2
-        }
-    ],
-    "company": [
-        {
-            "id": "1",
-            "name": "apple",
-            "description": "iphone"
-        },
-        {
-            "id": "2",
-            "name": "google",
-            "description": "search"
-        }
-    ]
+  "user": [
+    {
+      "id": "1",
+      "name": "dave",
+      "age": 20,
+      "companyId": 1
+    },
+    {
+      "id": "2",
+      "name": "kelli",
+      "age": 15,
+      "companyId": 2
+    },
+    {
+      "id": "3",
+      "name": "sean",
+      "age": 45,
+      "companyId": 2
+    },
+    {
+      "id": "4",
+      "name": "cam",
+      "age": 29,
+      "companyId": 2
+    }
+  ],
+  "company": [
+    {
+      "id": "1",
+      "name": "apple",
+      "description": "iphone"
+    },
+    {
+      "id": "2",
+      "name": "google",
+      "description": "search"
+    }
+  ]
 }

@@ -1,0 +1,48 @@
+query companyUsers {
+	company(id:"2") {
+  	id
+    name
+    description
+    users {
+      name
+    }
+	}
+}
+
+query companyUsers {
+	google:company(id:"2") {
+  	id
+    name
+    description
+    users {
+      name
+    }
+	}
+	apple:company(id:"1") {
+  	id
+    name
+    description
+    users {
+      name
+    }
+	}
+}
+
+FRAGEMENT
+query companyUsers {
+	google:company(id:"2") {
+   ...companyDetails
+	}
+	apple:company(id:"1") {
+   ...companyDetails
+	}
+}
+
+fragment companyDetails on Company {
+  id
+  name
+  description
+  users {
+    name
+  }
+}
