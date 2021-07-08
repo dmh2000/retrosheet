@@ -52,7 +52,7 @@ export RETROSHEET_DATA="${HOME}/projects/baseball/data"
 
 ## Code
 
-[Code is here](https://github.com/dmh2000/go_baseball_with_retrosheet/tree/main/src/csv-transform)
+[Code is here](https://github.com/dmh2000/retrosheet/tree/main/src/csv-transform)
 
 <pre>
 csv-transform

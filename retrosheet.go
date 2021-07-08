@@ -15,20 +15,20 @@ import (
 
 type options struct {
 	populate bool
-	query bool
-	help bool
-	mongodb string
-	dirname string
+	query    bool
+	help     bool
+	mongodb  string
+	dirname  string
 }
 
 func getOptions() options {
 	var opt options
 
 	// command line flags
-	flag.BoolVar(&opt.help,"h", false, "print help")
-	flag.BoolVar(&opt.help,"help", false, "print help")
-	flag.BoolVar(&opt.populate,"p", false, "repopulate the mongodb database")
-	flag.BoolVar(&opt.populate,"populate", false, "repopulate the mongodb database")
+	flag.BoolVar(&opt.help, "h", false, "print help")
+	flag.BoolVar(&opt.help, "help", false, "print help")
+	flag.BoolVar(&opt.populate, "p", false, "repopulate the mongodb database")
+	flag.BoolVar(&opt.populate, "populate", false, "repopulate the mongodb database")
 	flag.BoolVar(&opt.query, "q", false, "execute the sample queries")
 	flag.BoolVar(&opt.query, "query", false, "execute the sample queries")
 	flag.StringVar(&opt.mongodb, "m", "mongodb://localhost:27017", "-m [mongodb uri]")
@@ -48,7 +48,6 @@ func printHelp() {
 	fmt.Println("mongodb uri is required for populate and query options")
 	fmt.Println("mongodb uri default can be set with environment variable RETROSHEET_MONGO")
 }
-
 
 func main() {
 	var opt options
@@ -78,16 +77,16 @@ func main() {
 	}
 
 	// if no options, print help and exit
-	if !opt.populate && !opt.query  {
+	if !opt.populate && !opt.query {
 		printHelp()
 		return
 	}
 
 	// print environment variable data
-	fmt.Printf("Mongodb URI : %v\n",opt.mongodb)
+	fmt.Printf("Mongodb URI : %v\n", opt.mongodb)
 
 	if opt.populate {
-		fmt.Printf("Data path   : %v\n",opt.dirname)
+		fmt.Printf("Data path   : %v\n", opt.dirname)
 		if opt.dirname == "" {
 			log.Println("missing retrosheet data directory path")
 			printHelp()
@@ -96,11 +95,11 @@ func main() {
 		}
 
 		fmt.Println("Populating Database")
-		err = loader.PopulateRetrosheet(opt.dirname,opt.mongodb)
+		err = loader.PopulateRetrosheet(opt.dirname, opt.mongodb)
 		if err != nil {
 			log.Fatal(err)
 		}
-	}	
+	}
 
 	if opt.query {
 		fmt.Println("Running Queries")
@@ -110,16 +109,15 @@ func main() {
 		var teams []jsontypes.Team
 		teams, err = query.QueryTeam(
 			query.GetMongodbUri(),
-			"retrosheet",	
-			bson.D{{ Key:"lastyear",Value:"2010"}, { Key:"league",Value:"NL"}},
-		nil)
+			"retrosheet",
+			bson.D{{Key: "lastyear", Value: "2010"}, {Key: "league", Value: "NL"}},
+			nil)
 		if err != nil {
 			log.Fatal(err)
 		}
-		for _,v := range teams {
-			fmt.Println(v.Abbr,v.City,v.Nickname)
+		for _, v := range teams {
+			fmt.Println(v.Abbr, v.City, v.Nickname)
 		}
-
 
 		// ================================
 		// sample Personnel query
@@ -127,16 +125,15 @@ func main() {
 		var people []jsontypes.Person
 		people, err = query.QueryPersonnel(
 			query.GetMongodbUri(),
-			"retrosheet",	
-			bson.D{{ Key:"last",Value:"Schmidt"}},
+			"retrosheet",
+			bson.D{{Key: "last", Value: "Schmidt"}},
 			nil)
 		if err != nil {
 			log.Fatal(err)
 		}
-		for _,v := range people {
-			fmt.Println(v.ID, v.First,v.Last)
+		for _, v := range people {
+			fmt.Println(v.ID, v.First, v.Last)
 		}
-
 
 		// ================================
 		// sample Games query
@@ -144,14 +141,14 @@ func main() {
 		var games []jsontypes.Game
 		games, err = query.QueryGames(
 			query.GetMongodbUri(),
-			"retrosheet",	
-			bson.D{{ Key:"date",Value:"20190328"}},
+			"retrosheet",
+			bson.D{{Key: "date", Value: "20190328"}},
 			nil)
 		if err != nil {
 			log.Fatal(err)
 		}
-		for _,v := range games {
-			fmt.Println(v.Date,v.HomeTeam,v.VisitorTeam)
+		for _, v := range games {
+			fmt.Println(v.Date, v.HomeTeam, v.VisitorTeam)
 		}
 
 	}

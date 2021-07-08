@@ -3,6 +3,7 @@ package loader
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/dmh2000/retrosheet/src/jsontypes"
 	"go.mongodb.org/mongo-driver/bson"
@@ -11,7 +12,7 @@ import (
 )
 
 // LoadPersonnel ...
- func LoadPersonnel(uri string, fname string) error {
+func LoadPersonnel(uri string, fname string) error {
 	var personnel []jsontypes.Person
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
@@ -33,17 +34,17 @@ import (
 	}
 
 	// interface slice to contain bson marshalled personnel records
-	dox := make([]interface{},0)
+	dox := make([]interface{}, 0)
 
 	// marshall all the documents into 'dox'
-	for _,v := range personnel {
+	for _, v := range personnel {
 		// marshall the element into a byte slice
-		b , err := bson.Marshal(v)
+		b, err := bson.Marshal(v)
 		if err != nil {
 			return err
 		}
 		// append to array of documents
-		dox = append(dox,b)
+		dox = append(dox, b)
 	}
 
 	if len(dox) == 0 {
@@ -51,12 +52,11 @@ import (
 		return errors.New("No personnel data found, check path name")
 	}
 
-
 	// get the personnel collection
 	coll := client.Database("retrosheet").Collection("personnel")
 
 	// insert the documents
-	res, err  := coll.InsertMany(ctx,dox)
+	res, err := coll.InsertMany(ctx, dox)
 
 	// insertion failed
 	if err != nil {
@@ -67,19 +67,19 @@ import (
 	if res == nil {
 		return errors.New("no result : authorization?")
 	}
-		
+
 	defer client.Disconnect(ctx)
 
 	return nil
- }
+}
 
- // LoadTeams loads the teams.json file
- func LoadTeams(uri, fname string) error {
-    var teams []jsontypes.Team
+// LoadTeams loads the teams.json file
+func LoadTeams(uri, fname string) error {
+	var teams []jsontypes.Team
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
-		return err 
+		return err
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -96,17 +96,17 @@ import (
 	}
 
 	// byte slice to contain bson marshalled personnel records
-	dox := make([]interface{},0)
+	dox := make([]interface{}, 0)
 
 	// marshall all the documents into 'dox'
-	for _,v := range teams {
+	for _, v := range teams {
 		// marshall the element into a byte slice
-		b , err := bson.Marshal(v)
+		b, err := bson.Marshal(v)
 		if err != nil {
 			return err
 		}
 		// append to array of documents
-		dox = append(dox,b)
+		dox = append(dox, b)
 	}
 
 	if len(dox) == 0 {
@@ -118,7 +118,7 @@ import (
 	coll := client.Database("retrosheet").Collection("teams")
 
 	// insert the documents
-	res, err  := coll.InsertMany(ctx,dox)
+	res, err := coll.InsertMany(ctx, dox)
 
 	// insertion failed
 	if err != nil {
@@ -133,7 +133,7 @@ import (
 	defer client.Disconnect(ctx)
 
 	return nil
- }
+}
 
 // LoadGameLog loads a single gamelog file
 // gamelog files are organized by year
@@ -153,24 +153,24 @@ func LoadGameLog(uri string, fname string) error {
 		return err
 	}
 
-    // get the game data from the json file
+	// get the game data from the json file
 	games, err = jsontypes.ReadGamelog(fname)
 	if err != nil {
 		return err
 	}
 
 	// byte slice to contain bson marshalled personnel records
-	dox := make([]interface{},0)
+	dox := make([]interface{}, 0)
 
 	// marshall all the documents into 'dox'
-	for _,v := range games {
+	for _, v := range games {
 		// marshall the element into a byte slice
-		b , err := bson.Marshal(v)
+		b, err := bson.Marshal(v)
 		if err != nil {
 			return err
 		}
 		// append to array of documents
-		dox = append(dox,b)
+		dox = append(dox, b)
 	}
 
 	if len(dox) == 0 {
@@ -182,7 +182,7 @@ func LoadGameLog(uri string, fname string) error {
 	coll := client.Database("retrosheet").Collection("games")
 
 	// insert the documents
-	res, err  := coll.InsertMany(ctx,dox)
+	res, err := coll.InsertMany(ctx, dox)
 
 	// insertion failed
 	if err != nil {
@@ -194,16 +194,15 @@ func LoadGameLog(uri string, fname string) error {
 		return errors.New("no result : authorization?")
 	}
 
-
 	defer client.Disconnect(ctx)
 
 	return nil
- }
+}
 
 // LoadGames loads ALL gamelog files from the specified directory
 // gamelog files are organized by year
 // there are many gamelog files each containing multiple games
-// Note : as of the date of this file, there are over 200,000 
+// Note : as of the date of this file, there are over 200,000
 // games in all the gamelogs, so this function can take several seconds
 // to execute
 func LoadGames(uri, dirname string) error {
@@ -224,24 +223,24 @@ func LoadGames(uri, dirname string) error {
 	// create a slice of ALL games
 	// get the game data from all the files in the specified directory
 	// iterate over the directory containing the game files
-	games = make([]jsontypes.Game,0)
+	games = make([]jsontypes.Game, 0)
 	games, err = jsontypes.ReadGames(dirname)
 	if err != nil {
 		return err
 	}
 
 	// interface slice to contain bson marshalled personnel records
-	dox := make([]interface{},0)
+	dox := make([]interface{}, 0)
 
 	// marshall all the documents into 'dox'
-	for _,v := range games {
+	for _, v := range games {
 		// marshall the element into a byte slice
-		b , err := bson.Marshal(v)
+		b, err := bson.Marshal(v)
 		if err != nil {
 			return err
 		}
 		// append to array of documents
-		dox = append(dox,b)
+		dox = append(dox, b)
 	}
 	if len(dox) == 0 {
 		// no game data
@@ -252,7 +251,7 @@ func LoadGames(uri, dirname string) error {
 	coll := client.Database("retrosheet").Collection("games")
 
 	// insert the documents
-	res, err  := coll.InsertMany(ctx,dox)
+	res, err := coll.InsertMany(ctx, dox)
 
 	// insertion failed
 	if err != nil {
@@ -263,7 +262,7 @@ func LoadGames(uri, dirname string) error {
 	if res == nil {
 		return errors.New("no result : authorization?")
 	}
-	
+
 	defer client.Disconnect(ctx)
 
 	return nil
@@ -272,7 +271,7 @@ func LoadGames(uri, dirname string) error {
 // DropRetrosheet drop the retrosheet database
 // in prep for repopulation
 func DropRetrosheet(uri string) error {
-	
+
 	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 	if err != nil {
 		return err
@@ -290,7 +289,7 @@ func DropRetrosheet(uri string) error {
 	if err != nil {
 		return err
 	}
-			
+
 	defer client.Disconnect(ctx)
 
 	return nil
@@ -306,24 +305,28 @@ func PopulateRetrosheet(dirname string, mongodb_uri string) error {
 	var games = dirname + "/gamelogs/json/"
 
 	// delete the database
+	fmt.Println("Drop existing database")
 	err = DropRetrosheet(mongodb_uri)
 	if err != nil {
 		return err
 	}
 
 	// load the personnel  data
-	err = LoadPersonnel(mongodb_uri,personnel)
+	fmt.Println("Populating Personnel")
+	err = LoadPersonnel(mongodb_uri, personnel)
 	if err != nil {
 		return err
 	}
 
 	// load the team data
-	err = LoadTeams(mongodb_uri,teams)
+	fmt.Println("Populating Teams")
+	err = LoadTeams(mongodb_uri, teams)
 	if err != nil {
 		return err
 	}
 
 	// load the game data
+	fmt.Println("Populating Games")
 	err = LoadGames(mongodb_uri, games)
 	if err != nil {
 		return err
@@ -331,4 +334,3 @@ func PopulateRetrosheet(dirname string, mongodb_uri string) error {
 
 	return nil
 }
-
