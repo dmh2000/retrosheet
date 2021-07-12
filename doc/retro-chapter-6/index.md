@@ -13,4 +13,4 @@ slug: "/retro-chapter-5"
 - [Chapter 5 - Simple Queries](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-5/index.md)
 - [Chapter 6 - API Microservice](https://github.com/dmh2000/retrosheet/blob/main/doc/retro-chapter-6/index.md)
 
-# Chapter 6 - API Microservice
+# Chapter 6 - API Microservice and React Client
