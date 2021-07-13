@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/dmh2000/retrosheet/src/api"
 	"github.com/dmh2000/retrosheet/src/jsontypes"
 	"github.com/dmh2000/retrosheet/src/loader"
 	"github.com/dmh2000/retrosheet/src/query"
@@ -17,6 +18,7 @@ type options struct {
 	populate bool
 	query    bool
 	help     bool
+	serve    bool
 	mongodb  string
 	dirname  string
 }
@@ -27,6 +29,8 @@ func getOptions() options {
 	// command line flags
 	flag.BoolVar(&opt.help, "h", false, "print help")
 	flag.BoolVar(&opt.help, "help", false, "print help")
+	flag.BoolVar(&opt.serve, "s", false, "run graphql server")
+	flag.BoolVar(&opt.serve, "serve", false, "run graphql server")
 	flag.BoolVar(&opt.populate, "p", false, "repopulate the mongodb database")
 	flag.BoolVar(&opt.populate, "populate", false, "repopulate the mongodb database")
 	flag.BoolVar(&opt.query, "q", false, "execute the sample queries")
@@ -72,12 +76,6 @@ func main() {
 
 	// if help requested, print and exit
 	if opt.help {
-		printHelp()
-		return
-	}
-
-	// if no options, print help and exit
-	if !opt.populate && !opt.query {
 		printHelp()
 		return
 	}
@@ -152,4 +150,13 @@ func main() {
 		}
 
 	}
+
+	// run the GraphQL server
+	if opt.serve {
+		fmt.Println("Starting GraphQL Server")
+		api.Run()
+	}
+
+	// no options
+	printHelp()
 }
